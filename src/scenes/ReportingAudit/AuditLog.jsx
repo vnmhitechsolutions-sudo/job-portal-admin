@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import axios from "axios";
+import axios from "api/api";
 import {
   Box,
   Typography,
@@ -16,7 +16,7 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import { DownloadOutlined, SearchOutlined } from "@mui/icons-material";
 
-const API_URL = "http://localhost:5000/api/admin/audit-logs";
+const ENDPOINT = "/admin/audit-logs";
 
 const AuditLog = () => {
   const [logs, setLogs] = useState([]);
@@ -37,7 +37,7 @@ const AuditLog = () => {
   const fetchAuditLogs = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(API_URL, {
+      const { data } = await axios.get(ENDPOINT, {
         params: {
           page: page + 1,
           limit: pageSize,
@@ -47,7 +47,6 @@ const AuditLog = () => {
           role: roleFilter || undefined,
           search: search || undefined,
         },
-        headers: { Authorization: `Bearer ${token}` },
       });
       if (data?.success) {
         setLogs(data.logs || []);

@@ -10,7 +10,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "api/api";
 
 const roles = [
   { key: "SUPER_ADMIN", label: "Super Admin" },
@@ -40,7 +40,7 @@ const Register = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", form);
+      const res = await axios.post("/admin/auth/register", form);
       setSuccess("User registered successfully!");
       navigate("/login");
     } catch (err) {

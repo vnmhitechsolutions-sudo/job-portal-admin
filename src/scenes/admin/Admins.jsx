@@ -28,7 +28,7 @@ import {
   CheckCircleOutline,
   AddOutlined,
 } from "@mui/icons-material";
-import axiosInstance from "../../state/instant";
+import axios from "api/api";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -68,7 +68,7 @@ const Admins = () => {
   const fetchAdmins = async () => {
     try {
       setLoading(true);
-      const res = await axiosInstance.get("/admins");
+      const res = await axios.get("/admin/users");
 
       const rows = res.data.data.map((admin) => ({
         id: admin._id,
@@ -115,13 +115,14 @@ const Admins = () => {
     }
 
     try {
-      await axiosInstance.post("/admins", {
+      const payload = {
         name: form.name,
         email: form.email,
         password: form.password,
-        role: form.role,
-        isActive: form.isActive,
-      });
+        roleKey: form.role, // Backend expects roleKey
+      };
+
+      await axios.post("/admin/auth/register", payload);
 
       setSnackbar({
         open: true,
@@ -177,41 +178,41 @@ const Admins = () => {
     { field: "createdAt", headerName: "Created", flex: 1 },
     ...(currentRole === "SUPER_ADMIN"
       ? [
-          {
-            field: "actions",
-            headerName: "Actions",
-            flex: 1,
-            sortable: false,
-            renderCell: (params) => (
-              <Stack direction="row" spacing={1}>
-                <IconButton
-                  onClick={() => {
-                    setSelectedAdmin(params.row);
-                    setOpenView(true);
-                  }}
-                >
-                  <VisibilityOutlined />
-                </IconButton>
-                <IconButton color="primary">
-                  <EditOutlined />
-                </IconButton>
-                <IconButton
-                  color={
-                    params.row.status === "Active"
-                      ? "warning"
-                      : "success"
-                  }
-                >
-                  {params.row.status === "Active" ? (
-                    <BlockOutlined />
-                  ) : (
-                    <CheckCircleOutline />
-                  )}
-                </IconButton>
-              </Stack>
-            ),
-          },
-        ]
+        {
+          field: "actions",
+          headerName: "Actions",
+          flex: 1,
+          sortable: false,
+          renderCell: (params) => (
+            <Stack direction="row" spacing={1}>
+              <IconButton
+                onClick={() => {
+                  setSelectedAdmin(params.row);
+                  setOpenView(true);
+                }}
+              >
+                <VisibilityOutlined />
+              </IconButton>
+              <IconButton color="primary">
+                <EditOutlined />
+              </IconButton>
+              <IconButton
+                color={
+                  params.row.status === "Active"
+                    ? "warning"
+                    : "success"
+                }
+              >
+                {params.row.status === "Active" ? (
+                  <BlockOutlined />
+                ) : (
+                  <CheckCircleOutline />
+                )}
+              </IconButton>
+            </Stack>
+          ),
+        },
+      ]
       : []),
   ];
 

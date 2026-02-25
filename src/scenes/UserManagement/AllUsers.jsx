@@ -30,9 +30,9 @@ import {
   EditOutlined,
 } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
-import axios from "axios";
+import api from "api/api";
 
-const API = "http://localhost:5000/api/admin/candidates";
+const ENDPOINT = "/admin/candidates";
 
 const AdminCandidates = () => {
   const token = localStorage.getItem("token");
@@ -59,8 +59,7 @@ const AdminCandidates = () => {
     try {
       setLoading(true);
 
-      const res = await axios.get(API, {
-        headers: { Authorization: `Bearer ${token}` },
+      const res = await api.get(ENDPOINT, {
         params: {
           page: paginationModel.page + 1,
           limit: paginationModel.pageSize,
@@ -72,24 +71,24 @@ const AdminCandidates = () => {
       setTotalRows(res.data?.total || 0);
 
       setRows(
-  data.map((c) => ({
-    id: c._id,
-    name: c.canname,
-    email: c.canemail,
-    mobile: c.canphone,
+        data.map((c) => ({
+          id: c._id,
+          name: c.canname,
+          email: c.canemail,
+          mobile: c.canphone,
 
-    // ✅ FIXED FIELD NAMES
-    referrerName: c.referrerName || "N/A",
-    referrerPhone: c.referrerPhone || "N/A",
-    referredBy: c.referredBy || "N/A",
+          // ✅ FIXED FIELD NAMES
+          referrerName: c.referrerName || "N/A",
+          referrerPhone: c.referrerPhone || "N/A",
+          referredBy: c.referredBy || "N/A",
 
-    verification: c.isVerified,
-    createdAt: c.createdAt,
-    status: c.isBlocked,
-    avatar: c.profilePicture,
-    raw: c,
-  }))
-);
+          verification: c.isVerified,
+          createdAt: c.createdAt,
+          status: c.isBlocked,
+          avatar: c.profilePicture,
+          raw: c,
+        }))
+      );
 
 
 
@@ -108,48 +107,40 @@ const AdminCandidates = () => {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this candidate permanently?")) return;
-    await axios.delete(`${API}/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    await api.delete(`${ENDPOINT}/${id}`);
     fetchCandidates();
   };
 
   const handleBlockToggle = async (id, isBlocked) => {
-  try {
-    setActionLoading(id);
+    try {
+      setActionLoading(id);
 
-    const action = isBlocked ? "unblock" : "block";
-    const endpoint = `${API}/${id}/${action}`;
+      const action = isBlocked ? "unblock" : "block";
+      const endpoint = `${ENDPOINT}/${id}/${action}`;
 
-    const res = await axios.patch(endpoint, {}, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+      const res = await api.patch(endpoint, {});
 
-    if (!res.data?.success) {
-      throw new Error(res.data?.message || "Action failed");
+      if (!res.data?.success) {
+        throw new Error(res.data?.message || "Action failed");
+      }
+
+      // 🔥 BEST PRACTICE → Refresh from server
+      await fetchCandidates();
+
+    } catch (err) {
+      console.log("FULL ERROR:", err);
+      console.log("STATUS:", err.response?.status);
+      console.log("DATA:", err.response?.data);
+      alert(err.response?.data?.message || "Action failed");
+    } finally {
+      setActionLoading(null);
     }
-
-    // 🔥 BEST PRACTICE → Refresh from server
-    await fetchCandidates();
-
-  } catch (err) {
-     console.log("FULL ERROR:", err);
-  console.log("STATUS:", err.response?.status);
-  console.log("DATA:", err.response?.data);
-  alert(err.response?.data?.message || "Action failed");
-  } finally {
-    setActionLoading(null);
-  }
-};
+  };
 
 
   const handleDeleteAll = async () => {
     if (!window.confirm("Delete ALL candidates?")) return;
-    await axios.delete(API, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    await api.delete(ENDPOINT);
     fetchCandidates();
   };
 
@@ -164,9 +155,7 @@ const AdminCandidates = () => {
 
   const handleSave = async () => {
     try {
-      await axios.put(`${API}/${selected._id}`, formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.put(`${ENDPOINT}/${selected._id}`, formData);
       setEditMode(false);
       setOpenView(false);
       fetchCandidates();

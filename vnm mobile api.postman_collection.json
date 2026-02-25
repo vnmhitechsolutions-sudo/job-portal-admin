@@ -1,0 +1,4319 @@
+{
+  "info": {
+    "_postman_id": "4a8e58e3-face-4a20-80b5-a127f851f278",
+    "name": "vnm mobile api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50393085",
+    "_collection_link": "https://go.postman.co/collection/50393085-4a8e58e3-face-4a20-80b5-a127f851f278?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "item": [
+        {
+          "name": "login phone",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/auth/login-mobile",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login-mobile"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"employee\",\n  \"mobile\": \"9998887776\",\n  \"otp\":\"4904\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login email",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/auth/login-email",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login-email"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"employee\",\n  \"email\": \"google@gmail.com\",\n  \"password\": \"abcd12@\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Register",
+      "item": [
+        {
+          "name": "candidate register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"candidate\",\n  \"canname\": \"Test User\",\n  \"canemail\": \"test@gmail.com\",\n  \"canphone\": \"9876543210\",\n  \"password\": \"test@123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "employee register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"employee\",\n  \"email\": \"employer@gmail.com\",\n  \"password\": \"test@123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "password",
+      "item": [
+        {
+          "name": "reset password",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/auth/reset-password",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@gmail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "candidate",
+      "item": [
+        {
+          "name": "Profile",
+          "item": [
+            {
+              "name": "my profile",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/candidate/me",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "candidate",
+                    "me"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "edit full profile",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/candidate/full-profile",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "candidate",
+                    "full-profile"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "personal",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/candidate/personal",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "candidate",
+                    "personal"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "education",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/candidate/education",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "candidate",
+                    "education"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "experience",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/candidate/experience",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "candidate",
+                    "experience"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "internship",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/candidate/internship",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "candidate",
+                    "internship"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "skill",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/candidate/skill",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "candidate",
+                    "skill"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "project",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/candidate/project",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "candidate",
+                    "project"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "language",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/candidate/language",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "candidate",
+                    "language"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Delete",
+          "item": [
+            {
+              "name": "delete experience",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/candidate/experience/69897df5987fe43d775c483f",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "candidate",
+                    "experience",
+                    "69897df5987fe43d775c483f"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete education",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/candidate/education/698ad28ac748eab93c3856ab",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "candidate",
+                    "education",
+                    "698ad28ac748eab93c3856ab"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete skill",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/candidate/skill/69898564987fe43d775c4868",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "candidate",
+                    "skill",
+                    "69898564987fe43d775c4868"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete project",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/candidate/project/698988d3987fe43d775c488c",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "candidate",
+                    "project",
+                    "698988d3987fe43d775c488c"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete language",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/candidate/language/69899138987fe43d775c48be",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "candidate",
+                    "language",
+                    "69899138987fe43d775c48be"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete internship",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/candidate/internship/69898163987fe43d775c4849",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "candidate",
+                    "internship",
+                    "69898163987fe43d775c4849"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Job Search",
+          "item": [
+            {
+              "name": "to get all jobs",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/jobs/all?page=1&limit=10",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "jobs",
+                    "all"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "pagination page 2",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/jobs/all?page=2&limit=10",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "jobs",
+                    "all"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "2"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "recommended jobs",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/jobs/recommended",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "jobs",
+                    "recommended"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "internship search",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/jobs/all?type=Internship&page=1&limit=10",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "jobs",
+                    "all"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "Internship"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "internship search page 2",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/jobs/all?type=Internship&page=2&limit=10",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "jobs",
+                    "all"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "Internship"
+                    },
+                    {
+                      "key": "page",
+                      "value": "2"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "State Govt jobs",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/jobs/government",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "jobs",
+                    "government"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Central Govt jobs",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/jobs/central",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "jobs",
+                    "central"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "filter by skill & education",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/jobs/all?skills=SQL&eduLvl=Under%20Graduate&limit=10",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "jobs",
+                    "all"
+                  ],
+                  "query": [
+                    {
+                      "key": "skills",
+                      "value": "SQL"
+                    },
+                    {
+                      "key": "eduLvl",
+                      "value": "Under Graduate"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "filter by state, mode, type",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/jobs/all?jobState=Tamil%20Nadu&jobMod=Work%20from%20home&jobTyp=Part%20Time",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "jobs",
+                    "all"
+                  ],
+                  "query": [
+                    {
+                      "key": "jobState",
+                      "value": "Tamil Nadu"
+                    },
+                    {
+                      "key": "jobMod",
+                      "value": "Work from home"
+                    },
+                    {
+                      "key": "jobTyp",
+                      "value": "Part Time"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "filter by dist, skills, type",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/jobs/all?jobDist=Hyderabad&skills=Python&jobTyp=Part%20Time",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "jobs",
+                    "all"
+                  ],
+                  "query": [
+                    {
+                      "key": "jobDist",
+                      "value": "Hyderabad"
+                    },
+                    {
+                      "key": "skills",
+                      "value": "Python"
+                    },
+                    {
+                      "key": "jobTyp",
+                      "value": "Part Time"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Applications & Bookmarks",
+          "item": [
+            {
+              "name": "get my applications (paginated)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/application/my-applications?page=1&limit=10",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "application",
+                    "my-applications"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "apply a job",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/application/apply",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "application",
+                    "apply"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jobId\": \"REPLACE_WITH_JOB_ID\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "check single job status",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/application/check-status/69955dbab1faea3a0588dc00",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "application",
+                    "check-status",
+                    "69955dbab1faea3a0588dc00"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "my bookmarks",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/application/bookmarked-jobs",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "application",
+                    "bookmarked-jobs"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "toggle bookmark",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/application/bookmark",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "application",
+                    "bookmark"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jobId\": \"REPLACE_WITH_JOB_ID\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Tutorials & Live",
+          "item": [
+            {
+              "name": "list all tutorials",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/tutorials",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "tutorials"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get specific tutorial",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/tutorials/694e324de2e38403817c7748",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "tutorials",
+                    "694e324de2e38403817c7748"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "live sessions",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/home/announcements",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "home",
+                    "announcements"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "feedback",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/feedback/submit",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "feedback",
+                "submit"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"Great app!\",\n  \"rating\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "employer",
+      "item": [
+        {
+          "name": "Company Profile",
+          "item": [
+            {
+              "name": "get company profile",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/employee/profile",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "profile"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "save company profile",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/employee/profile",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "profile"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Job Management",
+          "item": [
+            {
+              "name": "post a job",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/jobs/create",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "jobs",
+                    "create"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jobTit\": \"Software Engineer\",\n  \"jobCity\": \"Chennai\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "post internship",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/jobs/create",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "jobs",
+                    "create"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jobTit\": \"React Intern\",\n  \"jobTyp\": \"Internship\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "my posted jobs",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/jobs/my-jobs",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "jobs",
+                    "my-jobs"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Applications Management",
+          "item": [
+            {
+              "name": "all applications (paginated)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/employee/applications?page=1&limit=10",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "applications"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "applied candidates",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/employee/applications?status=Applied",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "applications"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "Applied"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "shortlisted candidates",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/employee/applications?status=Shortlisted",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "applications"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "Shortlisted"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "interview scheduled",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/employee/applications?status=Interview%20Scheduled&page=1&limit=10",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "applications"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "Interview Scheduled"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "hired candidates",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/employee/applications?status=Hired&page=1&limit=10",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "applications"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "Hired"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update Status",
+          "item": [
+            {
+              "name": "shortlist candidate",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/employee/applications/update-status",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "applications",
+                    "update-status"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"applicationId\": \"REPLACE_ID\",\n  \"status\": \"Shortlisted\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "schedule interview",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/employee/applications/update-status",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "applications",
+                    "update-status"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"applicationId\": \"REPLACE_ID\",\n  \"status\": \"Interview Scheduled\",\n  \"interviewDate\": \"2025-03-01\",\n  \"interviewTime\": \"10:00 AM\",\n  \"interviewMode\": \"Online\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "hire candidate",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/employee/applications/update-status",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "applications",
+                    "update-status"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"applicationId\": \"REPLACE_ID\",\n  \"status\": \"Hired\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "reject candidate",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/employee/applications/update-status",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "applications",
+                    "update-status"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"applicationId\": \"REPLACE_ID\",\n  \"status\": \"Rejected\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "bulk schedule interview",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/employee/applications/update-status",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "applications",
+                    "update-status"
+                  ]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"applicationIds\": [\"ID1\",\"ID2\",\"ID3\"],\n  \"status\": \"Interview Scheduled\",\n  \"interviewDate\": \"2025-03-01\",\n  \"interviewTime\": \"10:00 AM\",\n  \"interviewMode\": \"Online\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Candidate Search",
+          "item": [
+            {
+              "name": "search candidates (paginated)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/employee/candidates?page=1&limit=10",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "candidates"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "filter by skill",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/employee/candidates?skill=React&page=1&limit=10",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "candidates"
+                  ],
+                  "query": [
+                    {
+                      "key": "skill",
+                      "value": "React"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "filter by location",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJjYW5kaWRhdGUiLCJpYXQiOjE3NzA3MDUwMTksImV4cCI6MTc3MzI5NzAxOX0.jJTAXAZpmic9X88ziKIhAIo72To2TqqxchlCpFocHn8",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://13.205.65.243/api/employee/candidates?location=Tamil%20Nadu&page=1&limit=10",
+                  "protocol": "http",
+                  "host": [
+                    "13",
+                    "205",
+                    "65",
+                    "243"
+                  ],
+                  "path": [
+                    "api",
+                    "employee",
+                    "candidates"
+                  ],
+                  "query": [
+                    {
+                      "key": "location",
+                      "value": "Tamil Nadu"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "filter",
+      "item": [
+        {
+          "name": "filter data",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/jobs/filters",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "jobs",
+                "filters"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Employee - Document Validation",
+      "item": [
+        {
+          "name": "Get Document Format Rules",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJlbXBsb3llZSIsImlhdCI6MTc3MDcwNTAxOSwiZXhwIjoxNzczMjk3MDE5fQ.example",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/employee/profile/document/rules",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "employee",
+                "profile",
+                "document",
+                "rules"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Validate Single Document",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJlbXBsb3llZSIsImlhdCI6MTc3MDcwNTAxOSwiZXhwIjoxNzczMjk3MDE5fQ.example",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"pan\",\n  \"number\": \"ABCDE1234F\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/employee/profile/document/validate",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "employee",
+                "profile",
+                "document",
+                "validate"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Validate Multiple Documents",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJlbXBsb3llZSIsImlhdCI6MTc3MDcwNTAxOSwiZXhwIjoxNzczMjk3MDE5fQ.example",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"documents\": [\n    { \"type\": \"pan\", \"number\": \"ABCDE1234F\" },\n    { \"type\": \"gst\", \"number\": \"29ABCDE1234F1Z5\" },\n    { \"type\": \"udyam\", \"number\": \"UDYAM-TN-01-0012345\" },\n    { \"type\": \"cin\", \"number\": \"L17110MH1973PLC013328\" }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/employee/profile/document/validate",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "employee",
+                "profile",
+                "document",
+                "validate"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Validate Invalid Document (Error Case)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODk0MTljYzc0OGVhYjkzYzM4NGRkOSIsInJvbGUiOiJlbXBsb3llZSIsImlhdCI6MTc3MDcwNTAxOSwiZXhwIjoxNzczMjk3MDE5fQ.example",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"documents\": [\n    { \"type\": \"pan\", \"number\": \"INVALID123\" },\n    { \"type\": \"gst\", \"number\": \"BADGST\" }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/employee/profile/document/validate",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "employee",
+                "profile",
+                "document",
+                "validate"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bookmarks - Paginated",
+      "item": [
+        {
+          "name": "Get Bookmarked Jobs - Page 1",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/application/bookmarked-jobs?page=1&limit=10",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "application",
+                "bookmarked-jobs"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Bookmarked Jobs - Page 2",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/application/bookmarked-jobs?page=2&limit=10",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "application",
+                "bookmarked-jobs"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Bookmarked Jobs - Custom Limit (5 per page)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/application/bookmarked-jobs?page=1&limit=5",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "application",
+                "bookmarked-jobs"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Toggle Bookmark (Save / Unsave Job)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jobId\": \"PASTE_JOB_ID_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/application/bookmark",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "application",
+                "bookmark"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Bookmarked Job IDs (for UI icons)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/application/bookmarked-ids",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "application",
+                "bookmarked-ids"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Candidate Dashboard & Visibility",
+      "item": [
+        {
+          "name": "Get Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/candidate/dashboard",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "candidate",
+                "dashboard"
+              ]
+            },
+            "description": "Returns: profileCompletion (%), appliedJobs, shortlisted, savedJobs, jobSearchStatus, profileVisibility, incompleteSections"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Visibility Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/candidate/visibility-status",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "candidate",
+                "visibility-status"
+              ]
+            },
+            "description": "Returns current jobSearchStatus, profileVisibility, description, and all available options for the Change Status dropdown"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Job Seeking Status - Actively Looking",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jobSearchStatus\": \"Actively Looking\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/candidate/visibility-status",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "candidate",
+                "visibility-status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Job Seeking Status - Open to Opportunities",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jobSearchStatus\": \"Open to Opportunities\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/candidate/visibility-status",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "candidate",
+                "visibility-status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Job Seeking Status - Not Looking (Hired)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jobSearchStatus\": \"Not Looking (Hired)\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/candidate/visibility-status",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "candidate",
+                "visibility-status"
+              ]
+            },
+            "description": "Auto-sets profileVisibility to false (Hidden from employer searches)"
+          },
+          "response": []
+        },
+        {
+          "name": "Toggle Profile Visibility Only (true/false)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"profileVisibility\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/candidate/visibility-status",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "candidate",
+                "visibility-status"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "\ud83d\udcc4 Legal",
+      "description": "Public legal content endpoints. No authentication required.",
+      "item": [
+        {
+          "name": "Get Privacy Policy",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/legal/privacy-policy",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "legal",
+                "privacy-policy"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Terms & Conditions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/legal/terms-of-service",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "legal",
+                "terms-of-service"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Refund & Cancellation Policy",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/legal/refund-policy",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "legal",
+                "refund-policy"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Trust & Safety",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/legal/trust-and-safety",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "legal",
+                "trust-and-safety"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "\u2753 FAQ",
+      "description": "Public FAQ endpoints with category filter and keyword search. No authentication required.",
+      "item": [
+        {
+          "name": "Get All FAQs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/faq",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "faq"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get FAQs - Candidates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/faq?category=candidates",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "faq"
+              ],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "candidates"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get FAQs - Employers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/faq?category=employers",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "faq"
+              ],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "employers"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get FAQs - Account & Security",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/faq?category=account",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "faq"
+              ],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "account"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get FAQs - Keyword Search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/faq?search=interview",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "faq"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "interview"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get FAQs - Category + Search Combined",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/faq?category=employers&search=verify",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "faq"
+              ],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "employers"
+                },
+                {
+                  "key": "search",
+                  "value": "verify"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get FAQ Categories Only",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/faq/categories",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "faq",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "\ud83d\udd10 Auth \u2014 Forgot & Reset Password",
+      "description": "Public endpoints for password recovery flow. No token required.",
+      "item": [
+        {
+          "name": "Forgot Password (Send Reset Email)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/auth/forgot-password",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "forgot-password"
+              ]
+            },
+            "description": "Sends a password reset link to the user's email. No auth required."
+          },
+          "response": []
+        },
+        {
+          "name": "Reset Password With Token (from email link)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password\": \"NewStrongPass@123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/auth/reset-password/PASTE_TOKEN_FROM_EMAIL_HERE",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "reset-password",
+                "PASTE_TOKEN_FROM_EMAIL_HERE"
+              ]
+            },
+            "description": "PUT /api/auth/reset-password/:token \u2014 Token comes from the reset email link."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "\ud83d\udd11 Auth \u2014 Google Login",
+      "description": "Google OAuth flow. Three-step process for mobile clients.",
+      "item": [
+        {
+          "name": "Step 1 \u2014 Google Login (verify ID token)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"idToken\": \"GOOGLE_ID_TOKEN_FROM_FLUTTER\",\n  \"role\": \"candidate\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/auth/google-login",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "google-login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Step 2 \u2014 Google Request OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@gmail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/auth/google-request-otp",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "google-request-otp"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Step 3 \u2014 Google Finish (submit OTP)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@gmail.com\",\n  \"otp\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/auth/google-finish",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "google-finish"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "\ud83d\udc64 Candidate \u2014 Job Preferences",
+      "description": "Save and retrieve AI recommendation preferences for the candidate.",
+      "item": [
+        {
+          "name": "Save Job Preferences",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"preferredJobType\": \"Full Time\",\n  \"preferredLocation\": \"Chennai\",\n  \"preferredSkills\": [\"React\", \"Node.js\"]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/candidate/job-preferences",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "candidate",
+                "job-preferences"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Job Preferences",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/candidate/job-preferences",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "candidate",
+                "job-preferences"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "\ud83d\udccb Application \u2014 Interactions",
+      "description": "Get all job IDs the candidate has interacted with (applied + bookmarked).",
+      "item": [
+        {
+          "name": "Get All Interactions (Applied + Bookmarked IDs)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/application/interactions",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "application",
+                "interactions"
+              ]
+            },
+            "description": "Returns all job IDs the candidate has applied to OR bookmarked. Useful for batch UI icon rendering."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "\ud83c\udfe2 Employer \u2014 Extra Endpoints",
+      "description": "Employer endpoints missing from the main employer folder.",
+      "item": [
+        {
+          "name": "Get Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/employee/dashboard-stats",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "employee",
+                "dashboard-stats"
+              ]
+            },
+            "description": "Returns employer dashboard statistics."
+          },
+          "response": []
+        },
+        {
+          "name": "Change Password (Authenticated)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oldPassword\": \"OldPass@123\",\n  \"newPassword\": \"NewPass@456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/employee/change-password",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "employee",
+                "change-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Candidate by ID (Full Profile)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/employee/candidate/PASTE_CANDIDATE_ID_HERE",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "employee",
+                "candidate",
+                "PASTE_CANDIDATE_ID_HERE"
+              ]
+            },
+            "description": "GET /api/employee/candidate/:id \u2014 Employer views a specific candidate's full profile."
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Single Company Document",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "docFile",
+                  "type": "file",
+                  "src": ""
+                },
+                {
+                  "key": "docType",
+                  "type": "text",
+                  "value": "pan"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/employee/profile/document",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "employee",
+                "profile",
+                "document"
+              ]
+            },
+            "description": "POST /api/employee/profile/document \u2014 Upload one document file (GST, PAN, etc). Use form-data with field name 'docFile'."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Company Document",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/employee/profile/document/pan",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "employee",
+                "profile",
+                "document",
+                "pan"
+              ]
+            },
+            "description": "DELETE /api/employee/profile/document/:type \u2014 Replace 'pan' with the document type to delete (e.g. gst, pan, msme)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "\ud83d\udcbc Jobs \u2014 Extra Endpoints",
+      "description": "Job endpoints missing from the main Jobs section.",
+      "item": [
+        {
+          "name": "Home Stats (Active Jobs & Companies count)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/jobs/home-stats",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "jobs",
+                "home-stats"
+              ]
+            },
+            "description": "Public endpoint. Returns total active job count and company count for the app home screen."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Job by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/jobs/PASTE_JOB_ID_HERE",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "jobs",
+                "PASTE_JOB_ID_HERE"
+              ]
+            },
+            "description": "GET /api/jobs/:id \u2014 Public. Returns full details of a single job post."
+          },
+          "response": []
+        },
+        {
+          "name": "Post Government Job",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jobTit\": \"Clerk Grade II\",\n  \"department\": \"Railways\",\n  \"govLevel\": \"central\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/jobs/gov/create",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "jobs",
+                "gov",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Extend Job Deadline",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"newDeadline\": \"2026-03-31\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/jobs/PASTE_JOB_ID_HERE/extend",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "jobs",
+                "PASTE_JOB_ID_HERE",
+                "extend"
+              ]
+            },
+            "description": "PATCH /api/jobs/:id/extend \u2014 Employer extends an active job's application deadline."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "\ud83d\udd14 Notifications",
+      "description": "Notification endpoints. Auth required for all.",
+      "item": [
+        {
+          "name": "Get My Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/notifications",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "notifications"
+              ]
+            },
+            "description": "Works for both Candidate and Employer \u2014 uses token to find relevant notifications."
+          },
+          "response": []
+        },
+        {
+          "name": "Mark Notification as Read",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/notifications/PASTE_NOTIFICATION_ID_HERE/read",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "PASTE_NOTIFICATION_ID_HERE",
+                "read"
+              ]
+            },
+            "description": "PUT /api/notifications/:id/read"
+          },
+          "response": []
+        },
+        {
+          "name": "Send Interview Invite (Employer \u2192 Candidate)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"candidateId\": \"PASTE_CANDIDATE_USER_ID\",\n  \"message\": \"You are invited for an interview on March 10th at 10 AM.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/notifications/send-invite",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "notifications",
+                "send-invite"
+              ]
+            },
+            "description": "Triggers a Socket.IO real-time ping to the candidate and saves a DB notification record."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "\ud83d\udcc5 Meetings (Virtual Interviews)",
+      "description": "Meeting / virtual interview session management.",
+      "item": [
+        {
+          "name": "Create Meeting",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Frontend Developer Interview\",\n  \"scheduledAt\": \"2026-03-01T10:00:00.000Z\",\n  \"applicationId\": \"PASTE_APPLICATION_ID\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/meetings/create",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "meetings",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Meetings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/meetings/my-meetings",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "meetings",
+                "my-meetings"
+              ]
+            },
+            "description": "Works for both candidate and employer \u2014 filters by token role."
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Meetings (Public / Admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/meetings/all",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "meetings",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Meeting",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/meetings/PASTE_MEETING_ID_HERE",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "meetings",
+                "PASTE_MEETING_ID_HERE"
+              ]
+            },
+            "description": "DELETE /api/meetings/:id"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "\ud83c\udfa5 Webinars",
+      "description": "Webinar session management.",
+      "item": [
+        {
+          "name": "Get All Webinars (Public)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/webinars",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "webinars"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Enroll in Webinar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"webinarId\": \"PASTE_WEBINAR_ID_HERE\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/webinars/enroll",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "webinars",
+                "enroll"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Enrolled Webinars",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/webinars/my-webinars",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "webinars",
+                "my-webinars"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Webinar (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"How to Ace Your First Interview\",\n  \"scheduledAt\": \"2026-03-15T14:00:00.000Z\",\n  \"speaker\": \"John Doe\",\n  \"meetLink\": \"https://meet.google.com/xyz\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/webinars/create",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "webinars",
+                "create"
+              ]
+            },
+            "description": "No auth required currently (to be protected with admin middleware later)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "\ud83c\udfe0 Home Stats",
+      "description": "Home page data for the app landing screen.",
+      "item": [
+        {
+          "name": "Get Home Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/home/stats",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "home",
+                "stats"
+              ]
+            },
+            "description": "Public endpoint. Returns platform-level statistics for the app home screen."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Announcements / Live Sessions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://13.205.65.243/api/home/announcements",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "home",
+                "announcements"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "\ud83d\udcdd Feedback \u2014 All (Admin)",
+      "description": "Admin endpoint to fetch all submitted feedback.",
+      "item": [
+        {
+          "name": "Get All Feedback (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/feedback/all",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "feedback",
+                "all"
+              ]
+            },
+            "description": "GET /api/feedback/all \u2014 Returns all feedback submissions for admin review."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "\ud83d\uddd1\ufe0f Delete Account",
+      "description": "Permanently deletes the authenticated user's account and all associated data.\n\n\u2705 NO JSON body is needed.\nThe role (candidate or employer) is automatically read from the Bearer JWT token.\n\nJust paste the correct login token in the Authorization header and send the DELETE request.\n\n\u26a0\ufe0f THIS ACTION IS IRREVERSIBLE.",
+      "item": [
+        {
+          "name": "Delete Account \u2014 CANDIDATE (use candidate login token)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer PASTE_CANDIDATE_JWT_TOKEN_HERE",
+                "type": "text",
+                "description": "Log in as a candidate first, then paste the token here."
+              }
+            ],
+            "body": {
+              "mode": "none"
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/auth/delete-account",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "delete-account"
+              ]
+            },
+            "description": "DELETE /api/auth/delete-account\n\n\u2705 NO BODY REQUIRED \u2014 The server determines your role from your JWT token automatically.\n\nHow to test:\n1. Login as a Candidate using POST /api/auth/login-email or /login-mobile\n2. Copy the token from the response\n3. Paste it in the Authorization header above as: Bearer <token>\n4. Send this DELETE request\n\nWhat gets deleted for CANDIDATE:\n- CandidateUser account\n- CandidateProfile (education, experience, skills, etc.)\n- All Applications (jobs applied to)\n- All Bookmarks (saved jobs)\n- All Notifications\n\n\u26a0\ufe0f PERMANENT \u2014 Cannot be undone."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Account \u2014 EMPLOYER (use employer login token)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer PASTE_EMPLOYER_JWT_TOKEN_HERE",
+                "type": "text",
+                "description": "Log in as an employer first, then paste the token here."
+              }
+            ],
+            "body": {
+              "mode": "none"
+            },
+            "url": {
+              "raw": "http://13.205.65.243/api/auth/delete-account",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "delete-account"
+              ]
+            },
+            "description": "DELETE /api/auth/delete-account\n\n\u2705 NO BODY REQUIRED \u2014 The server determines your role from your JWT token automatically.\n\nHow to test:\n1. Login as an Employer using POST /api/auth/login-email or /login-mobile\n2. Copy the token from the response\n3. Paste it in the Authorization header above as: Bearer <token>\n4. Send this DELETE request\n\nWhat gets deleted for EMPLOYER:\n- EmployeeUser account\n- CompanyProfile (logo, documents, company info)\n- All Notifications (sent and received)\n\n\u26a0\ufe0f PERMANENT \u2014 Cannot be undone."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Recommended Jobs - Paginated",
+      "item": [
+        {
+          "name": "Get Recommended Jobs - Page 1 (Default)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/jobs/recommended?page=1&limit=10",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "jobs",
+                "recommended"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Returns top 10 recommended jobs for page 1. Response includes totalJobs, totalPages, currentPage, limit."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Recommended Jobs - Page 2",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/jobs/recommended?page=2&limit=10",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "jobs",
+                "recommended"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "2"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Recommended Jobs - Custom Limit (5 per page)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/jobs/recommended?page=1&limit=5",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "jobs",
+                "recommended"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Mobile Specific",
+      "item": [
+        {
+          "name": "Upcoming Interviews",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://13.205.65.243/api/mobile/interviews",
+              "protocol": "http",
+              "host": [
+                "13",
+                "205",
+                "65",
+                "243"
+              ],
+              "path": [
+                "api",
+                "mobile",
+                "interviews"
+              ]
+            },
+            "description": "Returns upcoming interviews for the candidate, categorized into Today, Future, and Completed. Groups by company."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

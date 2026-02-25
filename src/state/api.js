@@ -4,25 +4,39 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const BASE_URL =
-  process.env.REACT_APP_BASE_URL || "http://localhost:5000/api";
+  process.env.REACT_APP_BASE_URL || "http://13.205.65.243/api";
 
 console.log("✅ API BASE URL:", BASE_URL);
+
+const baseQuery = fetchBaseQuery({
+  baseUrl: BASE_URL,
+  credentials: "include",
+
+  prepareHeaders: (headers) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    return headers;
+  },
+});
+
+const baseQueryWithReauth = async (args, api, extraOptions) => {
+  let result = await baseQuery(args, api, extraOptions);
+
+  if (result.error && result.error.status === 401) {
+    console.warn("🔐 Session expired (401). Logging out...");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "/login";
+  }
+  return result;
+};
 
 export const api = createApi({
   reducerPath: "api",
 
-  baseQuery: fetchBaseQuery({
-    baseUrl: BASE_URL,
-    credentials: "include",
-
-    prepareHeaders: (headers) => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithReauth,
 
   tagTypes: ["Auth", "Admins", "Users", "Roles", "Permissions"],
 
@@ -30,7 +44,7 @@ export const api = createApi({
     /* ================= AUTH ================= */
     login: builder.mutation({
       query: (body) => ({
-        url: "/auth/login",
+        url: "/admin/auth/login",
         method: "POST",
         body,
       }),
@@ -38,16 +52,17 @@ export const api = createApi({
     }),
 
     verifyOtp: builder.mutation({
-    query: (data) => ({
-      url: "/auth/verify-otp",
-      method: "POST",
-      body: data,
+      query: (data) => ({
+        url: "/admin/auth/verify-otp",
+        method: "POST",
+        body: data,
+      }),
     }),
-  }),
+
 
     register: builder.mutation({
       query: (body) => ({
-        url: "/auth/register",
+        url: "/admin/auth/register",
         method: "POST",
         body,
       }),
@@ -56,13 +71,13 @@ export const api = createApi({
 
     /* ================= ADMINS ================= */
     getAdmins: builder.query({
-      query: () => "/admins",
+      query: () => "/admin/users",
       providesTags: ["Admins"],
     }),
 
     createAdmin: builder.mutation({
       query: (body) => ({
-        url: "/admins",
+        url: "/admin/auth/register",
         method: "POST",
         body,
       }),
@@ -71,7 +86,7 @@ export const api = createApi({
 
     updateAdmin: builder.mutation({
       query: ({ id, body }) => ({
-        url: `/admins/${id}`,
+        url: `/admin/users/${id}`,
         method: "PUT",
         body,
       }),
@@ -80,7 +95,7 @@ export const api = createApi({
 
     toggleAdminStatus: builder.mutation({
       query: (id) => ({
-        url: `/admins/${id}/status`,
+        url: `/admin/users/${id}/status`,
         method: "PATCH",
       }),
       invalidatesTags: ["Admins"],
@@ -88,7 +103,7 @@ export const api = createApi({
 
     deleteAdmin: builder.mutation({
       query: (id) => ({
-        url: `/admins/${id}`,
+        url: `/admin/users/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Admins"],
@@ -96,19 +111,19 @@ export const api = createApi({
 
     /* ================= USERS ================= */
     getUsers: builder.query({
-      query: () => "/users",
+      query: () => "/admin/users",
       providesTags: ["Users"],
     }),
 
     /* ================= ROLES ================= */
     getRoles: builder.query({
-      query: () => "/roles",
+      query: () => "/admin/roles",
       providesTags: ["Roles"],
     }),
 
     createRole: builder.mutation({
       query: (body) => ({
-        url: "/roles",
+        url: "/admin/roles",
         method: "POST",
         body,
       }),
@@ -117,7 +132,7 @@ export const api = createApi({
 
     updateRole: builder.mutation({
       query: ({ id, body }) => ({
-        url: `/roles/${id}`,
+        url: `/admin/roles/${id}`,
         method: "PUT",
         body,
       }),
@@ -126,7 +141,7 @@ export const api = createApi({
 
     assignPermissions: builder.mutation({
       query: ({ roleId, permissions }) => ({
-        url: `/roles/${roleId}/permissions`,
+        url: `/admin/roles/${roleId}/permissions`,
         method: "PUT",
         body: { permissions },
       }),
@@ -135,13 +150,13 @@ export const api = createApi({
 
     /* ================= PERMISSIONS ================= */
     getPermissions: builder.query({
-      query: () => "/permissions",
+      query: () => "/admin/permissions",
       providesTags: ["Permissions"],
     }),
 
     createPermission: builder.mutation({
       query: (body) => ({
-        url: "/permissions",
+        url: "/admin/permissions",
         method: "POST",
         body,
       }),
@@ -174,5 +189,5 @@ export const {
   /* PERMISSIONS */
   useGetPermissionsQuery,
   useCreatePermissionMutation,
-   useVerifyOtpMutation,
+  useVerifyOtpMutation,
 } = api;

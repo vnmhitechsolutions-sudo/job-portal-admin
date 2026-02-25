@@ -16,7 +16,7 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { motion, AnimatePresence } from "framer-motion";
-import axios from "state/instant";
+import axios from "api/api";
 
 /* =========================
    PAGE ANIMATION
@@ -49,8 +49,8 @@ const Reports = () => {
       setError("");
 
       const [applicationsRes, profilesRes] = await Promise.all([
-        axios.get("http://localhost:5000/api/admin/applications"),
-        axios.get("http://localhost:5000/api/admin/candidate-profiles"),
+        axios.get("/admin/applications"),
+        axios.get("/admin/candidate-profiles"),
       ]);
 
       const applications = Array.isArray(applicationsRes.data)
@@ -95,8 +95,8 @@ const Reports = () => {
       console.error("API ERROR:", err);
       setError(
         err.response?.data?.message ||
-          err.message ||
-          "Failed to fetch candidate data"
+        err.message ||
+        "Failed to fetch candidate data"
       );
     } finally {
       setLoading(false);

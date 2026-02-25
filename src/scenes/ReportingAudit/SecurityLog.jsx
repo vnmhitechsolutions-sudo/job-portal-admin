@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { DownloadOutlined, Refresh } from "@mui/icons-material";
-import axios from "state/instant";
+import axios from "api/api";
 
 /* =========================
    STATUS MAP (Backend Based)
@@ -50,15 +50,12 @@ const SecurityLog = () => {
       setError(null);
 
       const response = await axios.get(
-        `http://localhost:5000/api/security-logs`,
+        "/admin/security-logs",
         {
           params: {
             page: page + 1,
             limit: pageSize,
             status: statusFilter || undefined,
-          },
-          headers: {
-            Authorization: `Bearer ${token}`,
           },
         }
       );

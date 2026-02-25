@@ -9,7 +9,7 @@ import {
   IconButton,
 } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import axios from "state/instant";
+import axios from "api/api";
 
 import OverviewKPISection from "./components/OverviewKPISection";
 import CandidateAnalytics from "./components/CandidateAnalytics";
@@ -18,7 +18,7 @@ import ChartsSection from "./components/ChartsSection";
 import ActivitySection from "./components/ActivitySection";
 import FiltersBar from "./components/FiltersBar";
 
-const API = "http://localhost:5000/api/admin/dashboard";
+const ENDPOINT = "/admin/dashboard";
 
 const DashboardPage = () => {
   const [data, setData] = useState(null);
@@ -34,8 +34,7 @@ const DashboardPage = () => {
         setLoading(true);
         setError(null);
 
-        const res = await axios.get(API, {
-          headers: { Authorization: `Bearer ${token}` },
+        const res = await axios.get(ENDPOINT, {
           params: query,
         });
 

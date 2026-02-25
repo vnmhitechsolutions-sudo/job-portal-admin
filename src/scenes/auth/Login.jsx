@@ -21,13 +21,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [loginUser, { isLoading: loginLoading }] = useLoginMutation();
-  const [verifyOtp, { isLoading: otpLoading }] = useVerifyOtpMutation();
 
   const [form, setForm] = useState({ email: "", password: "" });
-  const [otp, setOtp] = useState("");
-  const [userId, setUserId] = useState(null);
-  const [step, setStep] = useState("LOGIN"); // LOGIN or OTP
-
   const [error, setError] = useState(null);
   const [snack, setSnack] = useState({
     open: false,
@@ -53,51 +48,19 @@ const Login = () => {
         password: form.password,
       }).unwrap();
 
-      setUserId(res.userId);
-      setStep("OTP");
-
       setSnack({
         open: true,
-        message: "OTP sent to Super Admin for approval",
+        message: "OTP sent to your email",
         severity: "info",
       });
-    } catch (err) {
-      setError(
-        err?.data?.message || "Login failed. Please try again."
-      );
-    }
-  };
 
-  const handleOtpSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
-
-    if (!otp) {
-      setError("Please enter OTP");
-      return;
-    }
-
-    try {
-      const res = await verifyOtp({
-        userId,
-        otp,
-      }).unwrap();
-
-      localStorage.setItem("token", res.token);
-      localStorage.setItem("user", JSON.stringify(res.user));
-
-      setSnack({
-        open: true,
-        message: "Login successful!",
-        severity: "success",
-      });
-
+      // Navigate to OTP verification page with email in state
       setTimeout(() => {
-        navigate("/dashboard");
-      }, 1200);
+        navigate("/verify-otp", { state: { email: res.email } });
+      }, 1000);
     } catch (err) {
       setError(
-        err?.data?.message || "Invalid or expired OTP"
+        err?.data?.message || "Login failed. Please check your credentials."
       );
     }
   };
@@ -137,94 +100,55 @@ const Login = () => {
               textAlign="center"
               color="text.secondary"
             >
-              Secure Admin Portal
+              Secure Admin Portal Login
             </Typography>
 
             {error && <Alert severity="error">{error}</Alert>}
 
-            {/* STEP 1 – LOGIN */}
-            {step === "LOGIN" && (
-              <form onSubmit={handleLoginSubmit}>
-                <Stack spacing={2}>
-                  <TextField
-                    label="Email Address"
-                    name="email"
-                    type="email"
-                    fullWidth
-                    required
-                    value={form.email}
-                    onChange={handleChange}
-                  />
+            <form onSubmit={handleLoginSubmit}>
+              <Stack spacing={2}>
+                <TextField
+                  label="Email Address"
+                  name="email"
+                  type="email"
+                  fullWidth
+                  required
+                  value={form.email}
+                  onChange={handleChange}
+                />
 
-                  <TextField
-                    label="Password"
-                    name="password"
-                    type="password"
-                    fullWidth
-                    required
-                    value={form.password}
-                    onChange={handleChange}
-                  />
+                <TextField
+                  label="Password"
+                  name="password"
+                  type="password"
+                  fullWidth
+                  required
+                  value={form.password}
+                  onChange={handleChange}
+                />
 
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                    disabled={loginLoading}
-                    sx={{ borderRadius: 2 }}
-                  >
-                    {loginLoading ? (
-                      <CircularProgress size={24} color="inherit" />
-                    ) : (
-                      "Request Access"
-                    )}
-                  </Button>
-                </Stack>
-              </form>
-            )}
-
-            {/* STEP 2 – OTP */}
-            {step === "OTP" && (
-              <form onSubmit={handleOtpSubmit}>
-                <Stack spacing={2}>
-                  <TextField
-                    label="Enter OTP"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    fullWidth
-                    required
-                  />
-
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                    disabled={otpLoading}
-                    sx={{ borderRadius: 2 }}
-                  >
-                    {otpLoading ? (
-                      <CircularProgress size={24} color="inherit" />
-                    ) : (
-                      "Verify & Login"
-                    )}
-                  </Button>
-
-                  <Button
-                    onClick={() => setStep("LOGIN")}
-                    size="small"
-                  >
-                    Back to Login
-                  </Button>
-                </Stack>
-              </form>
-            )}
+                <Button
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  disabled={loginLoading}
+                  sx={{ borderRadius: 2 }}
+                >
+                  {loginLoading ? (
+                    <CircularProgress size={24} color="inherit" />
+                  ) : (
+                    "Login"
+                  )}
+                </Button>
+              </Stack>
+            </form>
 
             <Typography
               variant="caption"
               textAlign="center"
               color="text.secondary"
             >
-              Multi-layer secured authentication enabled
+              Multi-factor authentication enabled for all admins
             </Typography>
           </Stack>
         </Paper>
@@ -249,3 +173,4 @@ const Login = () => {
 };
 
 export default Login;
+

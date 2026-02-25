@@ -30,9 +30,9 @@ import {
   EditOutlined,
 } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
-import axios from "axios";
+import axios from "api/api";
 
-const API = "http://localhost:5000/api/admin/employees";
+const ENDPOINT = "/admin/employees";
 
 const EmployeeAdminPanel = () => {
   const token = localStorage.getItem("token");
@@ -59,8 +59,7 @@ const EmployeeAdminPanel = () => {
     try {
       setLoading(true);
 
-      const res = await axios.get(API, {
-        headers: { Authorization: `Bearer ${token}` },
+      const res = await axios.get(ENDPOINT, {
         params: {
           page: paginationModel.page + 1,
           limit: paginationModel.pageSize,
@@ -104,9 +103,7 @@ const EmployeeAdminPanel = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this employee permanently?")) return;
 
-    await axios.delete(`${API}/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    await axios.delete(`${ENDPOINT}/${id}`);
 
     fetchEmployees();
   };
@@ -114,9 +111,7 @@ const EmployeeAdminPanel = () => {
   const handleDeleteAll = async () => {
     if (!window.confirm("Delete ALL employees?")) return;
 
-    await axios.delete(API, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    await axios.delete(ENDPOINT);
 
     fetchEmployees();
   };
@@ -127,9 +122,8 @@ const EmployeeAdminPanel = () => {
 
       const action = isBlocked ? "unblock" : "block";
       await axios.patch(
-        `${API}/${id}/${action}`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        `${ENDPOINT}/${id}/${action}`,
+        {}
       );
 
       await fetchEmployees();
@@ -151,9 +145,7 @@ const EmployeeAdminPanel = () => {
 
   const handleSave = async () => {
     try {
-      await axios.put(`${API}/${selected._id}`, formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.put(`${ENDPOINT}/${selected._id}`, formData);
 
       setEditMode(false);
       setOpenView(false);

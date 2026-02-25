@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Login from "scenes/auth/Login";
 import Register from "scenes/auth/Register";
+import VerifyOTP from "scenes/auth/VerifyOTP";
+
 
 
 
@@ -69,21 +71,23 @@ const App = () => {
           {/* ---------------- AUTH ONLY ---------------- */}
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/verify-otp" element={<VerifyOTP />} />
           <Route path="/register" element={<Register />} />
 
 
-    
+
+
 
           {/* ---------------- AFTER LOGIN ---------------- */}
           <Route element={<Layout />}>
             <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute allowedRoles={["SUPER_ADMIN", "ADMIN"]}>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
+              path="/dashboard"
+              element={
+                <ProtectedRoute allowedRoles={["SUPER_ADMIN", "ADMIN"]}>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
 
             <Route path="/products" element={<Products />} />
             <Route path="/customers" element={<Customers />} />

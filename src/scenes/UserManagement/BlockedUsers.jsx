@@ -22,9 +22,9 @@ import {
   BlockOutlined,
 } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
-import axios from "axios";
+import axios from "api/api";
 
-const API = "http://localhost:5000/api/admin/employees";
+const ENDPOINT = "/admin/employees";
 
 const EmployeeAdminPanel = () => {
   const [employees, setEmployees] = useState([]);
@@ -39,7 +39,7 @@ const EmployeeAdminPanel = () => {
   const fetchEmployees = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(API, { headers: { Authorization: `Bearer ${token}` } });
+      const res = await axios.get(ENDPOINT);
       const mapped = (res.data?.data || []).map(emp => ({
         id: emp._id,
         name: emp.empname,
@@ -81,9 +81,7 @@ const EmployeeAdminPanel = () => {
 
   const handleEditSave = async () => {
     try {
-      await axios.put(`${API}/${selectedEmployee._id}`, editData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.put(`${ENDPOINT}/${selectedEmployee._id}`, editData);
       setEditOpen(false);
       fetchEmployees();
       alert("Employee updated successfully");
@@ -96,7 +94,7 @@ const EmployeeAdminPanel = () => {
     const confirmMsg = block ? "Block this employee?" : "Unblock this employee?";
     if (!window.confirm(confirmMsg)) return;
     try {
-      await axios.patch(`${API}/${id}/status`, { isVerified: !block }, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.patch(`${ENDPOINT}/${id}/status`, { isVerified: !block });
       fetchEmployees();
     } catch (err) {
       alert(err.response?.data?.message || "Action failed");
@@ -106,7 +104,7 @@ const EmployeeAdminPanel = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this employee permanently?")) return;
     try {
-      await axios.delete(`${API}/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.delete(`${ENDPOINT}/${id}`);
       fetchEmployees();
     } catch (err) {
       alert(err.response?.data?.message || "Delete failed");

@@ -1,9 +1,9 @@
 
-
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "http://13.205.65.243/api",
+  withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use(
@@ -17,6 +17,20 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error)
+);
+
+// 🚪 Global 401 Handler
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      console.warn("🔐 Session expired (401). Logging out...");
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
 );
 
 export default axiosInstance;

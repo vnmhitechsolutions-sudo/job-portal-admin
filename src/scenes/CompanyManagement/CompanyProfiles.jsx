@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import axios from "axios";
+import axios from "api/api";
 import {
   Box,
   Typography,
@@ -30,18 +30,7 @@ import {
 } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 
-/* ===============================
-   AXIOS INSTANCE
-================================ */
-const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || "http://localhost:5000",
-});
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  return config;
-});
 
 /* ===============================
    STATUS CHIP
@@ -72,7 +61,7 @@ const AdminCompanies = () => {
       setLoading(true);
       setError("");
 
-      const res = await api.get("/api/companies");
+      const res = await axios.get("/admin/companies");
 
       if (!res.data?.success) throw new Error("Invalid response");
 
@@ -118,7 +107,7 @@ const AdminCompanies = () => {
     try {
       setSaving(true);
 
-      await api.put(`/api/companies/${viewCompany._id}`, formData);
+      await axios.put(`/admin/companies/${viewCompany._id}`, formData);
 
       setEditMode(false);
       fetchCompanies();

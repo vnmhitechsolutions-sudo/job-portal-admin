@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { motion } from "framer-motion";
-import axios from "state/instant";
+import axios from "api/api";
 
 /* =========================
    PAGE ANIMATION
@@ -50,9 +50,7 @@ const Reports = () => {
       setLoading(true);
       setError("");
 
-      const res = await axios.get(
-        "http://localhost:5000/api/admin/jobs"
-      );
+      const res = await axios.get("/admin/jobs");
 
       const jobs = res.data?.data || [];
 
@@ -85,8 +83,8 @@ const Reports = () => {
     } catch (err) {
       setError(
         err?.response?.data?.message ||
-          err.message ||
-          "API Fetch Failed"
+        err.message ||
+        "API Fetch Failed"
       );
     } finally {
       setLoading(false);

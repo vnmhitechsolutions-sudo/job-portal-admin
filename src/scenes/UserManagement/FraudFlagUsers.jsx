@@ -20,9 +20,9 @@ import {
   CheckCircleOutline,
   FlagOutlined,
 } from "@mui/icons-material";
-import axios from "axios";
+import axios from "api/api";
 
-const API = "http://localhost:5000/api"; // backend API base URL
+const ENDPOINT = "/admin/users";
 
 const FraudFlags = () => {
   const [users, setUsers] = useState([]);
@@ -38,9 +38,7 @@ const FraudFlags = () => {
   const fetchFraudUsers = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`${API}/users/fraud-flagged`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await axios.get(`${ENDPOINT}/fraud-flagged`);
 
       const list = res.data?.data || [];
 
@@ -75,9 +73,7 @@ const FraudFlags = () => {
     if (!window.confirm("Block this user?")) return;
 
     try {
-      await axios.patch(`${API}/users/${id}/block`, {}, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.patch(`${ENDPOINT}/${id}/block`, {});
       fetchFraudUsers();
     } catch (err) {
       alert(err.response?.data?.message || "Block failed");
@@ -91,9 +87,7 @@ const FraudFlags = () => {
     if (!window.confirm("Unflag this user?")) return;
 
     try {
-      await axios.patch(`${API}/users/${id}/unflag`, {}, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.patch(`${ENDPOINT}/${id}/unflag`, {});
       fetchFraudUsers();
     } catch (err) {
       alert(err.response?.data?.message || "Unflag failed");
