@@ -26,7 +26,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   }
 
   // 3. Render Children
-  return children;
+  return children ? children : <Outlet />;
 };
 
 export default ProtectedRoute;

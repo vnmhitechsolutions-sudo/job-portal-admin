@@ -11,27 +11,28 @@ import {
   DialogContent,
   DialogActions,
   Button,
-  CircularProgress,
   Divider,
   TextField,
   Paper,
   Grid,
+  Tooltip,
+  MenuItem,
 } from "@mui/material";
 import {
   VisibilityOutlined,
   EditOutlined,
   SaveOutlined,
-  CloseOutlined,
   ToggleOn,
   ToggleOff,
   RefreshOutlined,
+  DeleteOutline,
 } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import FiltersBar from "../dashboard/components/FiltersBar";
 
-/* =========================
-   MAIN COMPONENT
-========================= */
+const LEVELS = ["Basic", "Intermediate", "Advanced"];
+const LANGUAGES = ["English", "Tamil", "Hindi"];
+
 const AdminTutorials = () => {
   const [tutorials, setTutorials] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -42,9 +43,7 @@ const AdminTutorials = () => {
   const [formData, setFormData] = useState({});
   const [saving, setSaving] = useState(false);
 
-  /* =========================
-     FETCH
-  ========================== */
+  /* ================= FETCH ================= */
   const fetchTutorials = useCallback(async () => {
     try {
       setLoading(true);
@@ -58,7 +57,6 @@ const AdminTutorials = () => {
       setTutorials(res.data?.data || []);
     } catch (err) {
       console.error(err);
-      alert("Failed to load tutorials");
     } finally {
       setLoading(false);
     }
@@ -68,260 +66,150 @@ const AdminTutorials = () => {
     fetchTutorials();
   }, [fetchTutorials]);
 
-  const handleFilterChange = (newDates) => {
-    if (!newDates.startDate && !newDates.endDate) {
-      setSearch("");
-    }
-    setDateFilters(newDates);
-  };
-
-  /* =========================
-     LEVEL & SEARCH DETECTION
-  ========================== */
   const processedTutorials = useMemo(() => {
     let result = tutorials.map((tut) => ({
       ...tut,
-      level: (() => {
-        const t = tut.title?.toLowerCase() || "";
-        if (t.includes("advanced") || t.includes("pro"))
-          return "Advanced";
-        if (t.includes("basic") || t.includes("beginner"))
-          return "Beginner";
-        return "Intermediate";
-      })(),
+      id: tut._id,
+      level: tut.level || "Beginner", // Use the actual data from the database
     }));
 
     if (search) {
       const q = search.toLowerCase();
-      result = result.filter(
-        (t) =>
-          (t.title && t.title.toLowerCase().includes(q)) ||
-          (t.foss && t.foss.toLowerCase().includes(q)) ||
-          (t.level && t.level.toLowerCase().includes(q))
-      );
-    }
-
-    if (dateFilters.startDate || dateFilters.endDate) {
-      result = result.filter((tut) => {
-        if (!tut.createdAt) return false;
-        const d = new Date(tut.createdAt).toISOString().split("T")[0];
-        if (dateFilters.startDate && dateFilters.endDate)
-          return d >= dateFilters.startDate && d <= dateFilters.endDate;
-        if (dateFilters.startDate) return d >= dateFilters.startDate;
-        if (dateFilters.endDate) return d <= dateFilters.endDate;
-        return true;
-      });
+      result = result.filter(t => t.title?.toLowerCase().includes(q) || t.foss?.toLowerCase().includes(q));
     }
 
     return result;
-  }, [tutorials, search, dateFilters]);
+  }, [tutorials, search]);
 
-  /* =========================
-     SUMMARY COUNTS
-  ========================== */
-  const totalCount = tutorials.length;
-  const activeCount = tutorials.filter((t) => t.isActive).length;
-  const inactiveCount = tutorials.filter((t) => !t.isActive).length;
-
-  /* =========================
-     VIEW
-  ========================== */
   const openView = (tutorial) => {
     setViewTutorial(tutorial);
     setFormData(tutorial);
     setEditMode(false);
   };
 
-  /* =========================
-     SAVE
-  ========================== */
-  const handleSave = async () => {
+  const handleUpdate = async () => {
     try {
       setSaving(true);
-      await axios.put(
-        `/admin/tutorials/${viewTutorial._id}`,
-        formData
-      );
+      await axios.put(`/admin/tutorials/${viewTutorial._id}`, formData);
       fetchTutorials();
-      setViewTutorial(formData);
       setEditMode(false);
+      setViewTutorial(null);
     } catch (err) {
-      alert(err.response?.data?.message || "Update failed");
+      alert("Update failed");
     } finally {
       setSaving(false);
     }
   };
 
-  /* =========================
-     TOGGLE ACTIVE
-  ========================== */
   const toggleActive = async (id) => {
     try {
       await axios.patch(`/admin/tutorials/${id}/toggle`);
-      setTutorials((prev) =>
-        prev.map((t) =>
-          t._id === id
-            ? { ...t, isActive: !t.isActive }
-            : t
-        )
-      );
+      setTutorials(prev => prev.map(t => t._id === id ? { ...t, isActive: !t.isActive } : t));
     } catch {
       alert("Toggle failed");
     }
   };
 
-  /* =========================
-     TABLE COLUMNS
-  ========================== */
-  const columns = useMemo(
-    () => [
-      {
-        field: "title",
-        headerName: "Title",
-        flex: 2,
-        renderCell: ({ row }) => (
-          <Stack spacing={0.3}>
-            <Typography fontWeight={600}>
-              {row.title}
-            </Typography>
-            <Typography
-              fontSize="0.75rem"
-              color="text.secondary"
-            >
-              {row.outline || "No description"}
-            </Typography>
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this tutorial? This action cannot be undone.")) return;
+    try {
+      await axios.delete(`/admin/tutorials/${id}`);
+      setTutorials(prev => prev.filter(t => t._id !== id));
+      alert("Tutorial deleted successfully");
+    } catch (err) {
+      alert(err.response?.data?.message || "Delete failed");
+    }
+  };
+
+  const columns = useMemo(() => [
+    {
+      field: "title",
+      headerName: "TUTORIAL TITLE",
+      flex: 2,
+      renderCell: ({ row }) => (
+        <Stack direction="row" spacing={2} alignItems="center">
+          <Box sx={{ width: 8, height: 35, borderRadius: 1, bgcolor: row.isActive ? "success.main" : "warning.main" }} />
+          <Stack>
+            <Typography variant="body2" fontWeight={700}>{row.title}</Typography>
+            <Typography variant="caption" color="text.secondary" noWrap sx={{ maxWidth: 300 }}>{row.outline}</Typography>
           </Stack>
-        ),
-      },
-      {
-        field: "foss",
-        headerName: "FOSS",
-        flex: 1.2,
-        renderCell: ({ value }) => (
-          <Chip
-            size="small"
-            label={value || "—"}
-            sx={{
-              backgroundColor: "#1976d2",
-              color: "#fff",
-              fontWeight: 500,
-            }}
-          />
-        ),
-      },
-      {
-        field: "level",
-        headerName: "Level",
-        flex: 1,
-        renderCell: ({ value }) => (
-          <Typography fontWeight={500}>
-            {value}
-          </Typography>
-        ),
-      },
-      {
-        field: "active",
-        headerName: "Active",
-        flex: 0.7,
-        renderCell: ({ row }) => (
-          <IconButton
-            size="small"
-            color={row.isActive ? "success" : "default"}
-            onClick={() =>
-              toggleActive(row._id)
-            }
-          >
-            {row.isActive ? (
-              <ToggleOn />
-            ) : (
-              <ToggleOff />
-            )}
-          </IconButton>
-        ),
-      },
-      {
-        field: "actions",
-        headerName: "Actions",
-        flex: 0.8,
-        sortable: false,
-        renderCell: ({ row }) => (
-          <IconButton
-            size="small"
-            onClick={() => openView(row)}
-          >
-            <VisibilityOutlined />
-          </IconButton>
-        ),
-      },
-    ],
-    []
-  );
+        </Stack>
+      ),
+    },
+    {
+      field: "foss",
+      headerName: "FOSS CATEGORY",
+      flex: 1,
+      renderCell: ({ value }) => <Chip size="small" label={value || "—"} color="primary" sx={{ fontWeight: 600, borderRadius: "6px" }} />,
+    },
+    { field: "level", headerName: "LEVEL", flex: 0.8 },
+    {
+      field: "isActive",
+      headerName: "STATUS",
+      flex: 0.7,
+      renderCell: ({ row }) => (
+        <Chip
+          label={row.isActive ? "ACTIVE" : "INACTIVE"}
+          size="small"
+          color={row.isActive ? "success" : "default"}
+          onClick={() => toggleActive(row._id)}
+          sx={{ fontWeight: 700, cursor: "pointer" }}
+        />
+      ),
+    },
+    {
+      field: "actions",
+      headerName: "ACTIONS",
+      flex: 0.8,
+      sortable: false,
+      renderCell: ({ row }) => (
+        <Stack direction="row" spacing={1}>
+          <Tooltip title="View Details">
+            <IconButton size="small" color="primary" onClick={() => openView(row)} sx={{ bgcolor: "rgba(25, 118, 210, 0.08)" }}>
+              <VisibilityOutlined fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete">
+            <IconButton size="small" color="error" onClick={() => handleDelete(row._id)} sx={{ bgcolor: "rgba(211, 47, 47, 0.08)" }}>
+              <DeleteOutline fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Stack>
+      ),
+    },
+  ], []);
 
   return (
-    <Box p={3}>
-      <Typography
-        variant="h4"
-        fontWeight={600}
-        mb={3}
-      >
-        Tutorials Management
-      </Typography>
-
-      {/* =========================
-           SUMMARY CARDS
-      ========================== */}
-      <Grid container spacing={2} mb={3}>
-        {[
-          ["Total Tutorials", totalCount],
-          ["Active Tutorials", activeCount],
-          ["Inactive Tutorials", inactiveCount],
-        ].map(([label, value]) => (
-          <Grid item xs={12} md={4} key={label}>
-            <Paper
-              elevation={3}
-              sx={{
-                p: 2,
-                borderRadius: 2,
-              }}
-            >
-              <Typography
-                variant="subtitle2"
-                color="text.secondary"
-              >
-                {label}
-              </Typography>
-              <Typography
-                variant="h5"
-                fontWeight={600}
-              >
-                {value}
-              </Typography>
-            </Paper>
-          </Grid>
-        ))}
-      </Grid>
-
-      <Box mb={3}>
-        <FiltersBar onFilterChange={handleFilterChange} />
+    <Box p={4} sx={{ bgcolor: "#fafcfe", minHeight: "100vh" }}>
+      {/* --- Header --- */}
+      <Box mb={4}>
+        <Typography variant="h4" fontWeight={900} color="primary.main" sx={{ letterSpacing: -0.5 }}>
+          🎥 TUTORIALS MANAGEMENT
+        </Typography>
+        <Typography variant="body2" color="text.secondary" fontWeight={500}>
+          Organize and manage video tutorials, FOSS categories, and technical resources
+        </Typography>
       </Box>
 
-      <Paper sx={{ p: 2, mb: 3 }}>
-        <Grid container spacing={2} alignItems="center" justifyContent="space-between">
-          <Grid item xs={12} md={4}>
+      {/* 🚀 TOOLBAR (Matching Candidate User Page) */}
+      <Paper elevation={0} sx={{ p: 2, mb: 3, border: "1px solid #e0e0e0", borderRadius: 2 }}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} md={6}>
             <TextField
               fullWidth
               size="small"
-              label="Search"
+              placeholder="Search by Title, FOSS, or Category..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
           </Grid>
-          <Grid item>
+          <Grid item xs={12} md={6} display="flex" justifyContent="flex-end" gap={1}>
             <Button
-              variant="contained"
+              variant="outlined"
               startIcon={<RefreshOutlined />}
               onClick={fetchTutorials}
-              sx={{ textTransform: "uppercase" }}
+              size="small"
+              sx={{ fontWeight: 700, borderRadius: 2 }}
             >
               Refresh
             </Button>
@@ -329,174 +217,96 @@ const AdminTutorials = () => {
         </Grid>
       </Paper>
 
-      {/* =========================
-           DATA GRID
-      ========================== */}
-      <Paper elevation={3} sx={{ borderRadius: 2 }}>
-        <Box height="65vh">
+      {/* --- Date Filters --- */}
+      <Box mb={3}>
+        <FiltersBar onFilterChange={setDateFilters} />
+      </Box>
+
+      {/* --- Grid --- */}
+      <Paper elevation={0} sx={{ borderRadius: 4, overflow: "hidden", border: "1px solid #eef2f6", boxShadow: "0 10px 40px rgba(0,0,0,0.03)" }}>
+        <Box height="70vh">
           <DataGrid
             rows={processedTutorials}
-            loading={loading}
             columns={columns}
-            getRowId={(row) => row._id}
-            pageSizeOptions={[20]}
-            initialState={{
-              pagination: {
-                paginationModel: {
-                  pageSize: 20,
-                },
-              },
+            loading={loading}
+            sx={{
+              border: "none",
+              "& .MuiDataGrid-columnHeaders": { bgcolor: "#f8faff", color: "text.secondary", fontWeight: 700 },
+              "& .MuiDataGrid-cell": { borderBottom: "1px solid #f8faff" },
             }}
-            disableRowSelectionOnClick
-            hideFooterPagination
           />
         </Box>
       </Paper>
 
-      {/* =========================
-           VIEW / EDIT DIALOG
-      ========================== */}
-      {viewTutorial && (
-        <Dialog
-          open
-          fullWidth
-          maxWidth="md"
-        >
-          <DialogTitle>
-            <Stack
-              direction="row"
-              justifyContent="space-between"
+      {/* --- View/Edit Dialog --- */}
+      <Dialog
+        open={!!viewTutorial}
+        onClose={() => setViewTutorial(null)}
+        fullWidth
+        maxWidth="md"
+        PaperProps={{ sx: { borderRadius: 3 } }}
+      >
+        <DialogTitle component="div" sx={{ bgcolor: "primary.main", color: "white", px: 3, py: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Typography variant="h6" fontWeight={800}>
+            {editMode ? "✍️ EDIT TUTORIAL" : "🔍 TUTORIAL DETAILS"}
+          </Typography>
+          {!editMode && (
+            <Button
+              variant="contained"
+              size="small"
+              startIcon={<EditOutlined />}
+              onClick={() => setEditMode(true)}
+              sx={{ bgcolor: "white", color: "primary.main", fontWeight: 700, borderRadius: 2 }}
             >
-              <Typography fontWeight={600}>
-                Tutorial Details
-              </Typography>
-
-              {!editMode && (
-                <IconButton
-                  onClick={() =>
-                    setEditMode(true)
-                  }
-                >
-                  <EditOutlined />
-                </IconButton>
-              )}
-            </Stack>
-          </DialogTitle>
-
-          <Divider />
-
-          <DialogContent>
-            <Stack spacing={2} mt={1}>
-              <TextField
-                label="Title"
-                fullWidth
-                value={formData.title || ""}
-                disabled={!editMode}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    title: e.target.value,
-                  })
-                }
-              />
-
-              <TextField
-                label="Outline"
-                fullWidth
-                multiline
-                rows={3}
-                value={
-                  formData.outline || ""
-                }
-                disabled={!editMode}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    outline: e.target.value,
-                  })
-                }
-              />
-
-              <TextField
-                label="FOSS"
-                fullWidth
-                value={formData.foss || ""}
-                disabled={!editMode}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    foss: e.target.value,
-                  })
-                }
-              />
-
-              <TextField
-                label="Video URL"
-                fullWidth
-                value={
-                  formData.videoUrl || ""
-                }
-                disabled={!editMode}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    videoUrl:
-                      e.target.value,
-                  })
-                }
-              />
-
-              <Typography>
-                <b>Level:</b>{" "}
-                {
-                  processedTutorials.find(
-                    (t) =>
-                      t._id ===
-                      viewTutorial._id
-                  )?.level
-                }
-              </Typography>
-            </Stack>
-          </DialogContent>
-
-          <DialogActions>
-            {editMode ? (
-              <>
-                <Button
-                  startIcon={
-                    <CloseOutlined />
-                  }
-                  onClick={() =>
-                    setEditMode(false)
-                  }
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="contained"
-                  startIcon={
-                    <SaveOutlined />
-                  }
-                  onClick={handleSave}
-                  disabled={saving}
-                >
-                  {saving
-                    ? "Saving..."
-                    : "Save Changes"}
-                </Button>
-              </>
-            ) : (
-              <Button
-                onClick={() =>
-                  setViewTutorial(null)
-                }
-              >
-                Close
-              </Button>
-            )}
-          </DialogActions>
-        </Dialog>
-      )}
+              Edit
+            </Button>
+          )}
+        </DialogTitle>
+        <DialogContent sx={{ p: 4 }}>
+          <Stack spacing={4} mt={1}>
+            <Box>
+              <Typography variant="overline" color="primary" fontWeight={900} fontSize="0.75rem" sx={{ letterSpacing: 2, mb: 2, display: "block" }}>Tutorial Info</Typography>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <TextField fullWidth label="Tutorial Title" value={formData.title || ""} disabled={!editMode} onChange={(e) => setFormData({ ...formData, title: e.target.value })} />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth multiline rows={3} label="Program Outline" value={formData.outline || ""} disabled={!editMode} onChange={(e) => setFormData({ ...formData, outline: e.target.value })} />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField fullWidth label="FOSS Category" value={formData.foss || ""} disabled={!editMode} onChange={(e) => setFormData({ ...formData, foss: e.target.value })} />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField fullWidth label="Video Resource URL" value={formData.videoUrl || ""} disabled={!editMode} onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })} />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField select fullWidth label="Primary Language" value={formData.language || "English"} disabled={!editMode} onChange={(e) => setFormData({ ...formData, language: e.target.value })}>
+                    {LANGUAGES.map(l => <MenuItem key={l} value={l}>{l}</MenuItem>)}
+                  </TextField>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <TextField select fullWidth label="Difficulty Level" value={formData.level || "Basic"} disabled={!editMode} onChange={(e) => setFormData({ ...formData, level: e.target.value })}>
+                    {LEVELS.map(l => <MenuItem key={l} value={l}>{l}</MenuItem>)}
+                  </TextField>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth multiline rows={6} label="Full Transcript / Notes" value={formData.transcript || ""} disabled={!editMode} onChange={(e) => setFormData({ ...formData, transcript: e.target.value })} />
+                </Grid>
+              </Grid>
+            </Box>
+          </Stack>
+        </DialogContent>
+        <DialogActions sx={{ p: 3, bgcolor: "#f9f9f9" }}>
+          {editMode ? (
+            <>
+              <Button onClick={() => setEditMode(false)}>Cancel</Button>
+              <Button variant="contained" onClick={handleUpdate} disabled={saving}>Save Changes</Button>
+            </>
+          ) : (
+            <Button variant="contained" onClick={() => setViewTutorial(null)}>Done</Button>
+          )}
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

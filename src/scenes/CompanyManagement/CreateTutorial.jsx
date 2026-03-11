@@ -6,8 +6,11 @@ import {
   Button,
   Stack,
   MenuItem,
-  Divider
+  Divider,
+  Paper,
+  Grid,
 } from "@mui/material";
+import { SaveOutlined, VideoLibraryOutlined } from "@mui/icons-material";
 import axios from "state/instant";
 
 const LEVELS = ["Basic", "Intermediate", "Advanced"];
@@ -24,9 +27,6 @@ const CreateTutorial = () => {
     videoUrl: "",
     outline: "",
     transcript: "",
-    instructionSheet: "",
-    codeFiles: "",
-    assignment: ""
   });
 
   const handleChange = (e) => {
@@ -56,15 +56,9 @@ const CreateTutorial = () => {
         videoId: extractVideoId(form.videoUrl),
         outline: form.outline,
         transcript: form.transcript,
-        resources: {
-          instructionSheet: form.instructionSheet,
-          codeFiles: form.codeFiles,
-          assignment: form.assignment
-        }
       };
 
       await axios.post("/admin/tutorials", payload);
-
       alert("Tutorial Created Successfully ✅");
 
       setForm({
@@ -75,12 +69,8 @@ const CreateTutorial = () => {
         videoUrl: "",
         outline: "",
         transcript: "",
-        instructionSheet: "",
-        codeFiles: "",
-        assignment: ""
       });
     } catch (err) {
-      console.error(err);
       alert("Create failed ❌");
     } finally {
       setLoading(false);
@@ -88,43 +78,86 @@ const CreateTutorial = () => {
   };
 
   return (
-    <Box p={3} maxWidth={900}>
-      <Typography variant="h4" fontWeight={600}>
-        Create Tutorial
-      </Typography>
+    <Box p={4} sx={{ bgcolor: "#fafcfe", minHeight: "100vh" }}>
+      <Box mb={4}>
+        <Typography variant="h4" fontWeight={900} color="primary.main" sx={{ letterSpacing: -0.5 }}>
+          🎥 CREATE NEW TUTORIAL
+        </Typography>
+        <Typography variant="body2" color="text.secondary" fontWeight={500}>
+          Upload and organize educational resources, video content, and exercise materials
+        </Typography>
+      </Box>
 
-      <Stack spacing={2} mt={3}>
-        <TextField label="Title" name="title" value={form.title} onChange={handleChange} fullWidth />
-        <TextField label="FOSS / Course Name" name="foss" value={form.foss} onChange={handleChange} fullWidth />
+      <Paper elevation={0} sx={{ p: 4, borderRadius: 4, border: "1px solid #eef2f6", boxShadow: "0 10px 40px rgba(0,0,0,0.03)" }}>
+        <Stack spacing={4}>
+          {/* Section: Core Info */}
+          <Box>
+            <Typography variant="overline" color="primary" fontWeight={900} fontSize="0.75rem" sx={{ letterSpacing: 2, display: "block", mb: 2 }}>
+              General Information
+            </Typography>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={8}>
+                <TextField fullWidth label="Tutorial Title" name="title" value={form.title} onChange={handleChange} />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <TextField fullWidth label="FOSS / Software Name" name="foss" value={form.foss} onChange={handleChange} />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField select fullWidth label="Primary Language" name="language" value={form.language} onChange={handleChange}>
+                  {LANGUAGES.map(l => <MenuItem key={l} value={l}>{l}</MenuItem>)}
+                </TextField>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField select fullWidth label="Difficulty Level" name="level" value={form.level} onChange={handleChange}>
+                  {LEVELS.map(l => <MenuItem key={l} value={l}>{l}</MenuItem>)}
+                </TextField>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="YouTube / Resource Video URL"
+                  name="videoUrl"
+                  value={form.videoUrl}
+                  onChange={handleChange}
+                  InputProps={{ startAdornment: <VideoLibraryOutlined sx={{ mr: 1, color: "primary.main" }} /> }}
+                />
+              </Grid>
+            </Grid>
+          </Box>
 
-        <Stack direction="row" spacing={2}>
-          <TextField select label="Language" name="language" value={form.language} onChange={handleChange} fullWidth>
-            {LANGUAGES.map(l => <MenuItem key={l} value={l}>{l}</MenuItem>)}
-          </TextField>
+          <Divider />
 
-          <TextField select label="Level" name="level" value={form.level} onChange={handleChange} fullWidth>
-            {LEVELS.map(l => <MenuItem key={l} value={l}>{l}</MenuItem>)}
-          </TextField>
+          {/* Section: Content */}
+          <Box>
+            <Typography variant="overline" color="success.main" fontWeight={900} fontSize="0.75rem" sx={{ letterSpacing: 2, display: "block", mb: 2 }}>
+              Content & Transcript
+            </Typography>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <TextField fullWidth multiline rows={4} label="Program Outline" name="outline" value={form.outline} onChange={handleChange} />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField fullWidth multiline rows={6} label="Full Transcript / Notes" name="transcript" value={form.transcript} onChange={handleChange} />
+              </Grid>
+            </Grid>
+          </Box>
+
+
+          <Box pt={2}>
+            <Button
+              variant="contained"
+              size="large"
+              fullWidth
+              startIcon={<SaveOutlined />}
+              onClick={handleSubmit}
+              disabled={loading}
+              sx={{ py: 2, borderRadius: 2, fontWeight: 900, fontSize: "1rem", boxShadow: 4 }}
+            >
+              {loading ? "PROCESSING CONTENT..." : "PUBLISH TUTORIAL MODULE"}
+            </Button>
+          </Box>
         </Stack>
-
-        <TextField label="YouTube Video URL" name="videoUrl" value={form.videoUrl} onChange={handleChange} fullWidth />
-
-        <Divider />
-
-        <TextField label="Outline" multiline rows={3} name="outline" value={form.outline} onChange={handleChange} />
-        <TextField label="Transcript" multiline rows={6} name="transcript" value={form.transcript} onChange={handleChange} />
-
-        <Divider />
-
-        <Typography fontWeight={600}>Resources</Typography>
-        <TextField label="Instruction Sheet URL" name="instructionSheet" value={form.instructionSheet} onChange={handleChange} />
-        <TextField label="Code Files URL" name="codeFiles" value={form.codeFiles} onChange={handleChange} />
-        <TextField label="Assignment URL" name="assignment" value={form.assignment} onChange={handleChange} />
-
-        <Button variant="contained" size="large" onClick={handleSubmit} disabled={loading}>
-          {loading ? "Saving..." : "Create Tutorial"}
-        </Button>
-      </Stack>
+      </Paper>
     </Box>
   );
 };

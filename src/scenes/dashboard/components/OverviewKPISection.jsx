@@ -17,14 +17,24 @@ const OverviewKPISection = ({ data }) => {
   const {
     totalAdmins = 0,
     totalCandiUsers = 0,
-    totalEmployeeUsers = 0,
     totalJobpost = 0,
     totalApplications = 0,
   } = data;
 
+  // 🔥 Exhaustive fallbacks for terminology changes
+  const employerCount =
+    data.totalEmployerUsers ??
+    data.totalEmployers ??
+    data.totalEmployeeUsers ??
+    data.totalEmployees ??
+    data.totalEmployer ??
+    data.totalEmpUsers ??
+    data.employerCount ??
+    0;
+
   const cards = [
     { title: "Total Candidates", value: totalCandiUsers, color: "#0ea5e9" },
-    { title: "Total Employers", value: totalEmployeeUsers, color: "#10b981" },
+    { title: "Employer Users", value: employerCount, color: "#10b981" },
     { title: "Total Jobs", value: totalJobpost, color: "#f59e0b" },
     { title: "Total Applications", value: totalApplications, color: "#ef4444" },
     { title: "Admin Users", value: totalAdmins, color: "#6366f1" },

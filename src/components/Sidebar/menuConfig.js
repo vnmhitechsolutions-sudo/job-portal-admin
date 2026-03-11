@@ -8,6 +8,7 @@ import {
   Assignment,
   Assessment,
   Settings,
+  CalendarToday,
 } from "@mui/icons-material";
 
 import { ROLES } from "constants/roles";
@@ -63,11 +64,12 @@ const menuConfig = [
   },
 
   {
-    label: "ATS Pipeline",
-    path: "/applications/pipeline",
-    icon: <Assessment />,
-    roles: [ROLES.ADMIN, ROLES.MODERATOR],
+    label: "Meetings",
+    path: "/meetings",
+    icon: <CalendarToday />,
+    roles: [ROLES.SUPER_ADMIN, ROLES.ADMIN],
   },
+
 
   {
     label: "System Settings",

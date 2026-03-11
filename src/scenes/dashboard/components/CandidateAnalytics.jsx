@@ -24,12 +24,14 @@ import TrendingUpRoundedIcon from "@mui/icons-material/TrendingUpRounded";
 /* ========================================= */
 const KPI_CONFIG = {
   totalCandiProfiles: {
+    title: "Candidate Profiles",
     icon: <PersonOutlineRoundedIcon fontSize="small" />,
     gradient: "linear-gradient(135deg, #6366f1 0%, #818cf8 100%)",
     light: "#eef2ff",
     accent: "#6366f1",
   },
   totalCandiUsers: {
+    title: "Candidate Users",
     icon: <PeopleAltRoundedIcon fontSize="small" />,
     gradient: "linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%)",
     light: "#e0f2fe",
@@ -56,8 +58,8 @@ const KPI_CONFIG = {
 };
 
 const REQUIRED_KPI_KEYS = [
-  "totalCandiProfiles",
   "totalCandiUsers",
+  "totalCandiProfiles",
   "totalAppliedJobs",
   "bookmarkJobs",
   "blockedCandidates",
@@ -93,7 +95,7 @@ const CandidateAnalytics = ({ kpis, atsPipeline = [], loading, error }) => {
     if (!kpis) return [];
 
     return REQUIRED_KPI_KEYS.map((key) => ({
-      title: formatTitle(key),
+      title: KPI_CONFIG[key]?.title || formatTitle(key),
       value: kpis[key] ?? 0,
       key,
       ...KPI_CONFIG[key],

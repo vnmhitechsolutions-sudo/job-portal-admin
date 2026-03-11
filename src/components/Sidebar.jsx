@@ -193,7 +193,7 @@ const sidebarData = [
       { label: "Virtual Meet", path: "/companies", icon: <BusinessOutlined /> },
       {
         label: "Skill Training",
-        path: "/companies/verification",
+        path: "/skilltrain",
         icon: <AssignmentOutlined />,
       },
       {
@@ -203,7 +203,7 @@ const sidebarData = [
       },
       {
         label: "Create Skill Training",
-        path: "/skilltrain",
+        path: "/createskilltrain",
         icon: <AssignmentOutlined />,
       },
       {
@@ -228,11 +228,6 @@ const sidebarData = [
         label: "Applied Jobs",
         path: "/applications",
         icon: <AssignmentOutlined />,
-      },
-      {
-        label: "ATS Pipelines",
-        path: "/applications/pipeline",
-        icon: <BarChartOutlined />,
       },
     ],
   },
@@ -365,34 +360,86 @@ const Sidebar = ({
 
           {/* ===== MENU ===== */}
           <List>
-            {sidebarData.map((group) => (
-              <Box key={group.section}>
-                <Typography
-                  sx={{
-                    mt: "1.8rem",
-                    mb: "0.6rem",
-                    ml: "2rem",
-                    fontSize: "0.7rem",
-                    fontWeight: 600,
-                    letterSpacing: "1px",
-                    color: theme.palette.secondary[400],
-                  }}
-                >
-                  {group.section}
-                </Typography>
+            {sidebarData.map((group) => {
+              const userRoleKey = user?.role?.key;
 
-                {group.items.map((item) => (
-                  <SidebarItem
-                    key={item.path}
-                    item={item}
-                    active={active}
-                    navigate={navigate}
-                    theme={theme}
-                  />
-                ))}
+              // If user is CONTENT_MANAGER, only allow specific paths
+              if (userRoleKey === "CONTENT_MANAGER") {
+                const allowedPaths = [
+                  "/dashboard",
+                  "/tutorial",
+                  "/createtutorial",
+                  "/skilltrain",
+                  "/createskilltrain",
+                ];
 
-              </Box>
-            ))}
+                // Filter items in the group
+                const filteredItems = group.items.filter((item) =>
+                  allowedPaths.includes(item.path)
+                );
+
+                // If no items match, don't render this group
+                if (filteredItems.length === 0) return null;
+
+                const filteredGroup = { ...group, items: filteredItems };
+
+                return (
+                  <Box key={filteredGroup.section}>
+                    <Typography
+                      sx={{
+                        mt: "1.8rem",
+                        mb: "0.6rem",
+                        ml: "2rem",
+                        fontSize: "0.7rem",
+                        fontWeight: 600,
+                        letterSpacing: "1px",
+                        color: theme.palette.secondary[400],
+                      }}
+                    >
+                      {filteredGroup.section}
+                    </Typography>
+
+                    {filteredGroup.items.map((item) => (
+                      <SidebarItem
+                        key={item.path}
+                        item={item}
+                        active={active}
+                        navigate={navigate}
+                        theme={theme}
+                      />
+                    ))}
+                  </Box>
+                );
+              }
+
+              return (
+                <Box key={group.section}>
+                  <Typography
+                    sx={{
+                      mt: "1.8rem",
+                      mb: "0.6rem",
+                      ml: "2rem",
+                      fontSize: "0.7rem",
+                      fontWeight: 600,
+                      letterSpacing: "1px",
+                      color: theme.palette.secondary[400],
+                    }}
+                  >
+                    {group.section}
+                  </Typography>
+
+                  {group.items.map((item) => (
+                    <SidebarItem
+                      key={item.path}
+                      item={item}
+                      active={active}
+                      navigate={navigate}
+                      theme={theme}
+                    />
+                  ))}
+                </Box>
+              );
+            })}
           </List>
 
           {/* ===== FOOTER ===== */}

@@ -44,6 +44,9 @@ import {
   LinkOutlined,
   AccountBalanceOutlined,
   GroupsOutlined,
+  AccountCircleOutlined,
+  LocalPhoneOutlined,
+  WorkOutline,
 } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 
@@ -81,20 +84,42 @@ const AdminCompanies = () => {
       setLoading(true);
       setError("");
 
-      const res = await apiClient.get("/admin/companies", {
-        params: {
-          startDate: dateFilters.startDate || undefined,
-          endDate: dateFilters.endDate || undefined,
-        },
+      const [companiesRes, candidatesRes, employersRes] = await Promise.all([
+        apiClient.get("/admin/companies", {
+          params: {
+            startDate: dateFilters.startDate || undefined,
+            endDate: dateFilters.endDate || undefined,
+          },
+        }),
+        apiClient.get("/admin/candidates"),
+        apiClient.get("/admin/employers"),
+      ]);
+
+      const companiesRaw = companiesRes.data || (Array.isArray(companiesRes) ? companiesRes : []);
+      const candidatesRaw = Array.isArray(candidatesRes.data?.data)
+        ? candidatesRes.data.data
+        : (Array.isArray(candidatesRes.data) ? candidatesRes.data : []);
+      const employersRaw = employersRes.data || (Array.isArray(employersRes) ? employersRes : []);
+
+      const usersRaw = [...candidatesRaw, ...employersRaw];
+
+      const merged = companiesRaw.map((comp) => {
+        // Find master user by email or account ID
+        const masterUser = usersRaw.find(u => {
+          const empEmail = (comp.empemail || comp.email || "").toLowerCase();
+          const userEmail = (u.canemail || u.email || u.empemail || "").toLowerCase();
+          return (empEmail && userEmail && empEmail === userEmail) || (u._id === comp._id);
+        }) || {};
+
+        return {
+          ...comp,
+          referrerName: masterUser.referrerName || masterUser.referrername || comp.referrerName || "-",
+          referrerPhone: masterUser.referrerPhone || masterUser.referrerphone || comp.referrerPhone || "-",
+          referredBy: masterUser.referredBy || masterUser.referredby || comp.referredBy || "-",
+        };
       });
 
-      // Based on Step 1340, apiClient has response interceptor that returns data.
-      // So 'res' is the JSON object from the server.
-      if (res && res.data) {
-        setCompanies(res.data);
-      } else if (Array.isArray(res)) {
-        setCompanies(res);
-      }
+      setCompanies(merged);
     } catch (err) {
       setError(err?.message || "Failed to load companies");
     } finally {
@@ -134,7 +159,9 @@ const AdminCompanies = () => {
           (c.empcomNam && c.empcomNam.toLowerCase().includes(q)) ||
           (c.empindTyp && c.empindTyp.toLowerCase().includes(q)) ||
           (c.empstate && c.empstate.toLowerCase().includes(q)) ||
-          (c.empdist && c.empdist.toLowerCase().includes(q))
+          (c.empdist && c.empdist.toLowerCase().includes(q)) ||
+          (c.referrerName && c.referrerName.toLowerCase().includes(q)) ||
+          (c.referredBy && c.referredBy.toLowerCase().includes(q))
       );
     }
 
@@ -186,9 +213,10 @@ const AdminCompanies = () => {
   ================================= */
   const columns = useMemo(() => [
     { field: "empcomNam", headerName: "Company Name", flex: 2 },
+    { field: "referrerName", headerName: "Referrer", flex: 1 },
+    { field: "referredBy", headerName: "Source", flex: 1 },
     { field: "empindTyp", headerName: "Industry", flex: 1.2 },
     { field: "empstate", headerName: "State", flex: 1 },
-    { field: "empdist", headerName: "District", flex: 1 },
     { field: "empstf", headerName: "Employees", flex: 1 },
     {
       field: "empisVer",
@@ -475,6 +503,29 @@ const AdminCompanies = () => {
                   ) : (
                     <Typography color="text.secondary" fontStyle="italic">No documents uploaded for verification</Typography>
                   )}
+                </AccordionDetails>
+              </Accordion>
+
+              {/* --- SECTION: REFERRAL INFO --- */}
+              <Accordion elevation={0} sx={{ borderBottom: "1px solid #eee" }}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <GroupsOutlined color="primary" />
+                    <Typography fontWeight={800} variant="subtitle2">REFERRAL & SOURCE INFORMATION</Typography>
+                  </Stack>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Grid container spacing={2.5}>
+                    <Grid item xs={12} sm={6}>
+                      <TextField label="Referrer Name" fullWidth size="small" value={formData.referrerName || "-"} disabled InputProps={{ startAdornment: <AccountCircleOutlined sx={{ mr: 1, color: "primary.main" }} /> }} />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField label="Referrer Phone" fullWidth size="small" value={formData.referrerPhone || "-"} disabled InputProps={{ startAdornment: <LocalPhoneOutlined sx={{ mr: 1, color: "primary.main" }} /> }} />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField label="Referred By (Source)" fullWidth size="small" value={formData.referredBy || "Direct Registry"} disabled InputProps={{ startAdornment: <WorkOutline sx={{ mr: 1, color: "primary.main" }} /> }} />
+                    </Grid>
+                  </Grid>
                 </AccordionDetails>
               </Accordion>
             </Stack>

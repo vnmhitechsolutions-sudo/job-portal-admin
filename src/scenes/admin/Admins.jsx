@@ -58,6 +58,7 @@ const Admins = () => {
     confirmPassword: "",
     role: "ADMIN",
     isActive: true,
+    isVerified: false, // Added for centralized control
   });
 
   const [snackbar, setSnackbar] = useState({
@@ -81,7 +82,8 @@ const Admins = () => {
         email: admin.email,
         role: admin.role?.name || admin.role,
         status: admin.isActive ? "Active" : "Inactive",
-        createdAt: admin.createdAt, // Store raw for filtering
+        isVerified: admin.isVerified || false, // NEW: Track verification
+        createdAt: admin.createdAt,
         formattedDate: new Date(admin.createdAt).toLocaleString(),
       }));
 
@@ -125,7 +127,7 @@ const Admins = () => {
         name: form.name,
         email: form.email,
         password: form.password,
-        role: form.role,
+        roleKey: form.role,
         isActive: form.isActive,
       });
 
@@ -165,6 +167,7 @@ const Admins = () => {
       confirmPassword: "",
       role: adminRow.role === "Super Admin" || adminRow.role === "SUPER_ADMIN" ? "SUPER_ADMIN" : "ADMIN",
       isActive: adminRow.status === "Active",
+      isVerified: adminRow.isVerified || false,
     });
     setOpenEdit(true);
   };
@@ -191,12 +194,22 @@ const Admins = () => {
       const payload = {
         name: form.name,
         email: form.email,
-        role: form.role,
+        roleKey: form.role,
         isActive: form.isActive,
       };
-      // Only include password if the user entered a new one
+      // If password is being changed, use the specific /password endpoint
       if (form.password) {
-        payload.password = form.password;
+        await apiClient.patch(`/admin/users/${selectedAdmin.id}/password`, {
+          newPassword: form.password,
+        });
+      }
+
+      // Handle Specialized Status/Verify calls if changed
+      if (form.isActive !== (selectedAdmin.status === "Active")) {
+        await apiClient.patch(`/admin/users/${selectedAdmin.id}/status`, { isActive: form.isActive });
+      }
+      if (form.isVerified !== (selectedAdmin.isVerified)) {
+        await apiClient.patch(`/admin/users/${selectedAdmin.id}/verify`, { isVerified: form.isVerified });
       }
 
       await apiClient.put(`/admin/users/${selectedAdmin.id}`, payload);
@@ -245,7 +258,8 @@ const Admins = () => {
   const handleToggleStatus = async (id, currentStatus) => {
     try {
       const newStatus = currentStatus === "Active" ? false : true;
-      await apiClient.patch(`/admin/users/${id}`, { isActive: newStatus });
+      // UPDATED: Use specific /status route
+      await apiClient.patch(`/admin/users/${id}/status`, { isActive: newStatus });
       fetchAdmins();
       setSnackbar({
         open: true,
@@ -256,6 +270,27 @@ const Admins = () => {
       setSnackbar({
         open: true,
         message: err.response?.data?.message || "Status update failed",
+        severity: "error"
+      });
+    }
+  };
+
+  /* ================= TOGGLE VERIFY ================= */
+  const handleToggleVerify = async (id, currentVerified) => {
+    try {
+      const newVerify = !currentVerified;
+      // NEW: Use specific /verify route
+      await apiClient.patch(`/admin/users/${id}/verify`, { isVerified: newVerify });
+      fetchAdmins();
+      setSnackbar({
+        open: true,
+        message: `Admin verification: ${newVerify ? 'Verified' : 'Unverified'}`,
+        severity: "success"
+      });
+    } catch (err) {
+      setSnackbar({
+        open: true,
+        message: err.response?.data?.message || "Verification update failed",
         severity: "error"
       });
     }
@@ -331,20 +366,6 @@ const Admins = () => {
           </IconButton>
           <IconButton color="primary" onClick={() => handleOpenEdit(params.row)}>
             <EditOutlined />
-          </IconButton>
-          <IconButton
-            onClick={() => handleToggleStatus(params.row.id, params.row.status)}
-            color={
-              params.row.status === "Active"
-                ? "warning"
-                : "success"
-            }
-          >
-            {params.row.status === "Active" ? (
-              <BlockOutlined />
-            ) : (
-              <CheckCircleOutline />
-            )}
           </IconButton>
           <IconButton color="error" onClick={() => handleDelete(params.row.id)}>
             <DeleteOutline />
@@ -562,8 +583,8 @@ const Admins = () => {
 
             <TextField
               select
-              label="Status"
-              value={form.isActive ? "Active" : "Inactive"}
+              label="Account Status"
+              value={form.isActive ? "Active" : "Blocked"}
               onChange={(e) =>
                 setForm({
                   ...form,
@@ -572,8 +593,24 @@ const Admins = () => {
               }
               fullWidth
             >
-              <MenuItem value="Active">Active</MenuItem>
-              <MenuItem value="Inactive">Inactive</MenuItem>
+              <MenuItem value="Active">Active (Permit Access)</MenuItem>
+              <MenuItem value="Blocked">Blocked (Revoke Access)</MenuItem>
+            </TextField>
+
+            <TextField
+              select
+              label="Verification Status"
+              value={form.isVerified ? "Verified" : "Unverified"}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  isVerified: e.target.value === "Verified",
+                })
+              }
+              fullWidth
+            >
+              <MenuItem value="Verified">Verified</MenuItem>
+              <MenuItem value="Unverified">Unverified</MenuItem>
             </TextField>
           </Stack>
         </DialogContent>

@@ -28,7 +28,6 @@ import FlagUsers from "scenes/UserManagement/FraudFlagUsers";
 import Jobs from "scenes/JobsAts/Jobs";
 import Pending from "scenes/JobsAts/PendingApprovals";
 import Applicant from "scenes/JobsAts/Applications";
-import ATS from "scenes/JobsAts/ATS";
 import Reporting from "scenes/ReportingAudit/Reports";
 import Revenue from "scenes/ReportingAudit/Revenue";
 import Auditlog from "scenes/ReportingAudit/AuditLog";
@@ -41,10 +40,12 @@ import SkillTraining from "scenes/CompanyManagement/SkillTraining";
 import CreateTutorial from "scenes/CompanyManagement/CreateTutorial";
 import CandidateProfile from "scenes/UserManagement/CandidateProfile";
 import CompanyProfiles from "scenes/CompanyManagement/CompanyProfiles";
+import CreateSkillTraining from "scenes/CompanyManagement/CreateSkillTraining";
 import CompanyUsers from "scenes/CompanyManagement/CompanyUsers";
 import CandidateReferences from "scenes/ReportingAudit/CandidateReferences";
 import CollegeCandidates from "scenes/ReportingAudit/CollegeCandidates";
 import CompanyReferences from "scenes/ReportingAudit/CompanyReferences";
+import Meetings from "scenes/JobsAts/Meetings";
 
 const App = () => {
   const mode = useSelector((state) => state.global.mode);
@@ -69,42 +70,50 @@ const App = () => {
             <Route
               path="/dashboard"
               element={
-                <ProtectedRoute allowedRoles={["SUPER_ADMIN", "ADMIN"]}>
+                <ProtectedRoute allowedRoles={["SUPER_ADMIN", "CONTENT_MANAGER"]}>
                   <Dashboard />
                 </ProtectedRoute>
               }
             />
 
-            <Route path="/admins" element={<AdminPage />} />
-            <Route path="/roles" element={<Roles />} />
-            <Route path="/companies" element={<Companies />} />
-            <Route path="/companies/verification" element={<Verification />} />
+            {/* CONTENT_MANAGER & SUPER_ADMIN */}
+            <Route element={<ProtectedRoute allowedRoles={["SUPER_ADMIN", "CONTENT_MANAGER"]} />}>
+              <Route path="/tutorial" element={<Tutorial />} />
+              <Route path="/skilltrain" element={<SkillTraining />} />
+              <Route path="/createskilltrain" element={<CreateSkillTraining />} />
+              <Route path="/createtutorial" element={<CreateTutorial />} />
+            </Route>
 
-            <Route path="/users" element={<AllUser />} />
-            <Route path="/users/blocked" element={<CompanyUsers />} />
-            <Route path="/users/fraud" element={<FlagUsers />} />
+            {/* SUPER_ADMIN ONLY */}
+            <Route element={<ProtectedRoute allowedRoles={["SUPER_ADMIN"]} />}>
+              <Route path="/admins" element={<AdminPage />} />
+              <Route path="/roles" element={<Roles />} />
+              <Route path="/companies" element={<Companies />} />
+              <Route path="/companies/verification" element={<Verification />} />
 
-            <Route path="/jobs" element={<Jobs />} />
-            <Route path="/jobs/pending" element={<Pending />} />
-            <Route path="/applications" element={<Applicant />} />
-            <Route path="/applications/pipeline" element={<ATS />} />
+              <Route path="/users" element={<AllUser />} />
+              <Route path="/users/blocked" element={<CompanyUsers />} />
+              <Route path="/users/fraud" element={<FlagUsers />} />
 
-            <Route path="/reports" element={<Reporting />} />
-            <Route path="/reports/revenue" element={<Revenue />} />
+              <Route path="/jobs" element={<Jobs />} />
+              <Route path="/jobs/pending" element={<Pending />} />
+              <Route path="/applications" element={<Applicant />} />
+              <Route path="/meetings" element={<Meetings />} />
 
-            <Route path="/audit/logs" element={<Auditlog />} />
-            <Route path="/audit/security" element={<SecurityLog />} />
+              <Route path="/reports" element={<Reporting />} />
+              <Route path="/reports/revenue" element={<Revenue />} />
 
-            <Route path="/notifications" element={<Notification />} />
-            <Route path="/settings" element={<System />} />
-            <Route path="/tutorial" element={<Tutorial />} />
-            <Route path="/skilltrain" element={<SkillTraining />} />
-            <Route path="/createtutorial" element={<CreateTutorial />} />
-            <Route path="/profile" element={<CandidateProfile />} />
-            <Route path="/company-profile" element={<CompanyProfiles />} />
-            <Route path="/candidate-references" element={<CandidateReferences />} />
-            <Route path="/college-candidates" element={<CollegeCandidates />} />
-            <Route path="/company-references" element={<CompanyReferences />} />
+              <Route path="/audit/logs" element={<Auditlog />} />
+              <Route path="/audit/security" element={<SecurityLog />} />
+
+              <Route path="/notifications" element={<Notification />} />
+              <Route path="/settings" element={<System />} />
+              <Route path="/profile" element={<CandidateProfile />} />
+              <Route path="/company-profile" element={<CompanyProfiles />} />
+              <Route path="/candidate-references" element={<CandidateReferences />} />
+              <Route path="/college-candidates" element={<CollegeCandidates />} />
+              <Route path="/company-references" element={<CompanyReferences />} />
+            </Route>
           </Route>
 
           {/* fallback */}

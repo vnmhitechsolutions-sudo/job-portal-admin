@@ -78,12 +78,14 @@ const KPI_CONFIG = {
     accent: "#22c55e",
   },
   noOfVerification: {
+    title: "Verified Companies",
     icon: <VerifiedRoundedIcon fontSize="small" />,
     gradient: "linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%)",
     light: "#cffafe",
     accent: "#06b6d4",
   },
   totalEmployeeUsers: {
+    title: "Total Employer Users",
     icon: <BadgeRoundedIcon fontSize="small" />,
     gradient: "linear-gradient(135deg, #a855f7 0%, #c084fc 100%)",
     light: "#f3e8ff",
@@ -130,12 +132,39 @@ const EmployerAnalytics = ({ kpis, loading, error }) => {
   const employerCards = useMemo(() => {
     if (!kpis) return [];
 
-    return EMPLOYER_KPI_KEYS.map((key) => ({
-      title: formatTitle(key),
-      value: kpis[key] ?? 0,
-      key,
-      ...KPI_CONFIG[key],
-    }));
+    return EMPLOYER_KPI_KEYS.map((key) => {
+      let value = kpis[key] ?? 0;
+
+      // 🔥 Exhaustive fallbacks for Employer User count
+      if (key === "totalEmployeeUsers" && (!kpis[key] || kpis[key] === 0)) {
+        value =
+          kpis.totalEmployerUsers ??
+          kpis.totalEmployers ??
+          kpis.totalEmployees ??
+          kpis.totalEmployer ??
+          kpis.totalEmpUsers ??
+          kpis.employerCount ??
+          0;
+      }
+
+      // 🔥 Robust dynamic detection for Verified Companies
+      if (key === "noOfVerification" && (!value || value === 0)) {
+        // Find any key that sounds like "verified" or "verification"
+        const foundKey = Object.keys(kpis).find(k =>
+          (k.toLowerCase().includes('verified') || k.toLowerCase().includes('verification')) &&
+          k !== 'noOfVerification' &&
+          typeof kpis[k] === 'number'
+        );
+        if (foundKey) value = kpis[foundKey];
+      }
+
+      return {
+        title: KPI_CONFIG[key]?.title || formatTitle(key),
+        value,
+        key,
+        ...KPI_CONFIG[key],
+      };
+    });
   }, [kpis]);
 
   // =========================================

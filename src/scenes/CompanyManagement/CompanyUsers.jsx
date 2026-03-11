@@ -69,36 +69,55 @@ const EmployeeAdminPanel = () => {
     try {
       setLoading(true);
 
-      const res = await apiClient.get("/admin/employers", {
-        params: {
-          page: paginationModel.page + 1,
-          limit: paginationModel.pageSize,
-          search: search || undefined,
-          startDate: dateFilters.startDate || undefined,
-          endDate: dateFilters.endDate || undefined,
-        },
-      });
+      const [employersRes, candidatesRes] = await Promise.all([
+        apiClient.get("/admin/employers", {
+          params: {
+            page: paginationModel.page + 1,
+            limit: paginationModel.pageSize,
+            search: search || undefined,
+            startDate: dateFilters.startDate || undefined,
+            endDate: dateFilters.endDate || undefined,
+          },
+        }),
+        apiClient.get("/admin/candidates"),
+      ]);
 
-      // BACKEND FORMAT: { success: true, total: 100, data: [...] }
-      const data = res.data || (Array.isArray(res) ? res : []);
-      setTotalRows(res.total || 0);
+      // BACKEND FORMATS: { success: true, total: 100, data: [...] }
+      const employersRaw = employersRes.data || (Array.isArray(employersRes) ? employersRes : []);
+      const candidatesRaw = Array.isArray(candidatesRes.data?.data)
+        ? candidatesRes.data.data
+        : (Array.isArray(candidatesRes.data) ? candidatesRes.data : []);
+
+      setTotalRows(employersRes.total || employersRes.data?.total || 0);
 
       setRows(
-        data.map((emp) => ({
-          id: emp._id,
-          name: emp.empname || emp.name || emp.canname || "N/A",
-          email: emp.empemail || emp.email || emp.canemail || "N/A",
-          mobile: emp.empphone || emp.mobile || emp.canphone || "N/A",
-          role: emp.role,
-          referrerName: emp.referrerName || emp.referrername || "N/A",
-          referrerPhone: emp.referrerPhone || emp.referrerphone || "N/A",
-          referredBy: emp.referredBy || emp.referredby || "N/A",
-          verification: emp.isVerified,
-          status: emp.isBlocked,
-          createdAt: emp.createdAt,
-          avatar: emp.profilePicture,
-          raw: emp,
-        }))
+        employersRaw.map((emp) => {
+          // Find master user record to get reliable referral data
+          const masterUser = candidatesRaw.find(u => {
+            const empEmail = (emp.empemail || emp.email || "").toLowerCase();
+            const userEmail = (u.canemail || u.email || "").toLowerCase();
+            return (empEmail && userEmail && empEmail === userEmail) || (u._id === emp._id);
+          }) || {};
+
+          return {
+            id: emp._id,
+            name: emp.empname || emp.name || masterUser.canname || masterUser.name || "N/A",
+            email: emp.empemail || emp.email || masterUser.canemail || masterUser.email || "N/A",
+            mobile: emp.empphone || emp.mobile || masterUser.canphone || masterUser.mobile || "N/A",
+            role: emp.role || "employer",
+
+            // Referral Data - Master Record Priority
+            referrerName: masterUser.referrerName || masterUser.referrername || emp.referrerName || emp.referrername || "N/A",
+            referrerPhone: masterUser.referrerPhone || masterUser.referrerphone || emp.referrerPhone || emp.referrerphone || "N/A",
+            referredBy: masterUser.referredBy || masterUser.referredby || emp.referredBy || emp.referredby || "N/A",
+
+            verification: emp.isVerified,
+            status: emp.isBlocked,
+            createdAt: emp.createdAt || masterUser.createdAt,
+            avatar: emp.profilePicture,
+            raw: { ...emp, ...masterUser },
+          };
+        })
       );
     } catch {
       alert("Failed to load employers");
@@ -209,6 +228,7 @@ const EmployeeAdminPanel = () => {
       { field: "mobile", headerName: "Mobile", flex: 0.8 },
       { field: "role", headerName: "Role", flex: 0.6 },
       { field: "referrerName", headerName: "Referrer", flex: 0.8 },
+      { field: "referredBy", headerName: "Source", flex: 0.8 },
       {
         field: "verification",
         headerName: "Verified",
